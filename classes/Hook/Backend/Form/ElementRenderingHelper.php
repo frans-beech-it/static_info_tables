@@ -31,7 +31,7 @@ class ElementRenderingHelper {
 	/*
 	 * Add ISO codes to the label of entities
 	 */
-	public function addIsoCodeToLabel ($PA, $fObj) {
+	public function addIsoCodeToLabel (&$PA, &$fObj) {
 		$PA['title'] = $PA['row'][$GLOBALS['TCA'][$PA['table']]['ctrl']['label']];
 		if (TYPO3_MODE == 'BE') {
 			switch ($PA['table']) {
