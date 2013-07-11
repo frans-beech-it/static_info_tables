@@ -28,10 +28,10 @@ $EM_CONF[$_EXTKEY] = array (
 	'lockType' => '',
 	'author' => 'René Fritz',
 	'author_email' => 'r.fritz@colorcube.de',
-	'author_company' => 'Colorcube - digital media lab',
+	'author_company' => 'Colorcube - digital media lab, www.colorcube.de',
 	'CGLcompliance' => NULL,
 	'CGLcompliance_note' => NULL,
-	'version' => '1.2.0',
+	'version' => '1.3.0',
 	'constraints' => 
 	array (
 		'depends' => 

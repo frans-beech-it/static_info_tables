@@ -4,23 +4,6 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 require_once(t3lib_extMgm::extPath($_EXTKEY).'class.tx_staticinfotables_div.php');
 
 
-$TYPO3_CONF_VARS['EXTCONF'][$_EXTKEY]['tables'] = array (
-	'static_countries' => array(
-		'label_fields' => array(	// possible label fields for different languages. Default as last.
-			'cn_short_##', 'cn_short_en',
-		)
-	),
-	'static_languages' => array(
-		'label_fields' => array(
-			'lg_name_##', 'lg_name_en',
-		)
-	),
-	'static_currencies' => array(
-		'label_fields' => array(
-			'cu_name_##', 'cu_name_en',
-		)
-	),
-);
 
 
 $TCA['static_countries'] = array (
@@ -35,11 +18,6 @@ $TCA['static_countries'] = array (
 		'title' => 'LLL:EXT:'.$_EXTKEY.'/locallang_db.php:static_countries.title',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_countries.gif',
-
-		// have a look in locallang_db.php:
-		// 'label' => tx_staticinfotables_div::getTCAlabelField('static_countries'),
-		// 'default_sortby' => 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_countries'),
-		// when this file is read there's no language initialized ...
 	),
 	'interface' => array (
 		'showRecordFieldList' => 'cn_iso_2,cn_iso_3,cn_iso_nr,cn_official_name_local,cn_official_name_en,cn_capital,cn_tldomain,cn_currency_iso_3,cn_currency_iso_nr,cn_phone,cn_eu_member,cn_address_format,cn_short_en,cn_short_dk,cn_short_de'

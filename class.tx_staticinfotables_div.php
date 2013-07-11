@@ -67,7 +67,7 @@ class tx_staticinfotables_div {
 		global $TYPO3_CONF_VARS, $TCA;
 
 		$labelField = '';
-		if($table) {
+		if($table AND is_array($TYPO3_CONF_VARS['EXTCONF']['static_info_tables']['tables'][$table]['label_fields'])) {
 			if($loadTCA) {
 				t3lib_div::loadTCA($table);
 			}
