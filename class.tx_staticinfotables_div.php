@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2004-2006 Ren√© Fritz (r.fritz@colorcube.de)
+*  (c) 2004-2006 RenÈ Fritz (r.fritz@colorcube.de)
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is
@@ -24,7 +24,7 @@
 /**
  * Misc functions to access the static info tables
  *
- * @author	Ren√© Fritz <r.fritz@colorcube.de>
+ * @author	RenÈ Fritz <r.fritz@colorcube.de>
  * @package TYPO3
  */
 /**
@@ -44,46 +44,46 @@
  *
  */
 
-
-
-
-/**
- * Misc functions to access the static info tables
- *
- * @author	Ren√© Fritz <r.fritz@colorcube.de>
- * @package TYPO3
- */
 class tx_staticinfotables_div {
-
 
 	/**
 	 * Returns a label field for the current language
 	 *
 	 * @param	string		table name
 	 * @param	boolean		If set (default) the TCA definition of the table should be loaded with t3lib_div::loadTCA(). It will be needed to set it to false if you call this function from inside of tca.php
+	 * @param	boolean		If set, we are looking for the "local" title field
 	 * @return	string		field name
 	 */
-	function getTCAlabelField($table, $loadTCA=true, $lang='') {
-		global $TYPO3_CONF_VARS, $TCA;
-
-		$labelField = '';
-		if($table AND is_array($TYPO3_CONF_VARS['EXTCONF']['static_info_tables']['tables'][$table]['label_fields'])) {
-			if($loadTCA) {
+	function getTCAlabelField($table, $loadTCA=TRUE, $lang='', $local=FALSE) {
+		global $TYPO3_CONF_VARS, $TCA, $LANG, $TSFE;
+		
+		if (is_object($LANG)) {
+			$csConvObj = $LANG->csConvObj;
+		} elseif (is_object($TSFE)) {
+			$csConvObj = $TSFE->csConvObj;
+		}
+		
+		$labelFields = array();
+		if($table && is_array($TYPO3_CONF_VARS['EXTCONF']['static_info_tables']['tables'][$table]['label_fields'])) {
+			if ($loadTCA) {
 				t3lib_div::loadTCA($table);
 			}
-
-			$lang = $lang ? $lang : strtolower(tx_staticinfotables_div::getCurrentLanguage());
-
+			
+			$lang = $lang ? $lang : tx_staticinfotables_div::getCurrentLanguage();
+			
 			foreach ($TYPO3_CONF_VARS['EXTCONF']['static_info_tables']['tables'][$table]['label_fields'] as $field) {
-				$labelField = str_replace ('##', $lang, $field);
-				if(is_array($TCA[$table]['columns'][$labelField])) {
-					return $labelField;
+				if ($local) {
+					$labelField = str_replace ('##', 'local', $field);
+				} else {
+					$labelField = str_replace ('##', $csConvObj->conv_case('utf-8',$lang,'toLower'), $field);
+				}
+				if (is_array($TCA[$table]['columns'][$labelField])) {
+					$labelFields[] = $labelField;
 				}
 			}
 		}
-		return $labelField;
+		return $labelFields;
 	}
-
 
 	/**
 	 * Returns the type of an iso code: nr, 2, 3
@@ -92,7 +92,7 @@ class tx_staticinfotables_div {
 	 * @return	string		iso code type
 	 */
 	function isoCodeType($isoCode) {
-		$type = false;
+		$type = '';
 		if (t3lib_div::testInt($isoCode)) {
 			$type = 'nr';
 		} elseif (strlen($isoCode) == 2) {
@@ -102,8 +102,7 @@ class tx_staticinfotables_div {
 		}
 		return $type;
 	}
-
-
+	
 	/**
 	 * Returns a iso code field for the passed table and iso code
 	 *
@@ -112,25 +111,24 @@ class tx_staticinfotables_div {
 	 * @param	boolean		If set (default) the TCA definition of the table should be loaded with t3lib_div::loadTCA(). It will be needed to set it to false if you call this function from inside of tca.php
 	 * @return	string		field name
 	 */
-	function getIsoCodeField($table, $isoCode, $loadTCA=true) {
+	function getIsoCodeField($table, $isoCode, $loadTCA=TRUE, $index=0) {
 		global $TYPO3_CONF_VARS, $TCA;
-
-		if($isoCode AND $table AND ($isoCodeField = $TYPO3_CONF_VARS['EXTCONF']['static_info_tables']['tables'][$table]['isocode_field'])) {
-			if($loadTCA) {
+		
+		if ($isoCode && $table && ($isoCodeField = $TYPO3_CONF_VARS['EXTCONF']['static_info_tables']['tables'][$table]['isocode_field'][$index])) {
+			if ($loadTCA) {
 				t3lib_div::loadTCA($table);
 			}
-
+			
 			$type = tx_staticinfotables_div::isoCodeType($isoCode);
-
+			
 			$isoCodeField = str_replace ('##', $type, $isoCodeField);
-			if(is_array($TCA[$table]['columns'][$isoCodeField])) {
+			if (is_array($TCA[$table]['columns'][$isoCodeField])) {
 				return $isoCodeField;
 			}
 		}
-		return false;
+		return FALSE;
 	}
-
-
+	
 	/**
 	 * Returns a sort field for the current language
 	 *
@@ -138,64 +136,114 @@ class tx_staticinfotables_div {
 	 * @param	boolean		If set (default) the TCA definition of the table should be loaded
 	 * @return	string		field name
 	 */
-	function getTCAsortField($table, $loadTCA=true) {
-		return tx_staticinfotables_div::getTCAlabelField($table, $loadTCA);
+	function getTCAsortField($table, $loadTCA=TRUE) {
+		$labelFields = tx_staticinfotables_div::getTCAlabelField($table, $loadTCA);
+		return $labelFields[0];
 	}
-
-
+	
 	/**
 	 * Returns the current language as iso-2-alpha code
 	 *
 	 * @return	string		'DE', 'EN', 'DK', ...
 	 */
 	function getCurrentLanguage() {
-		global $LANG, $TSFE;
-
+		global $LANG, $TSFE, $TYPO3_DB;
+		
+		if (is_object($LANG)) {
+			$langCodeT3 = $LANG->lang;
+			$csConvObj = $LANG->csConvObj;
+		} elseif (is_object($TSFE)) {
+			$langCodeT3 = $TSFE->lang;
+			$csConvObj = $TSFE->csConvObj;
+		} else {
+			return 'EN';
+		}
+		
+		$res = $TYPO3_DB->exec_SELECTquery(
+			'lg_iso_2,lg_country_iso_2',
+			'static_languages',
+			'lg_typo3='.$TYPO3_DB->fullQuoteStr($langCodeT3,'static_languages')
+			);
+		while ($row = $TYPO3_DB->sql_fetch_assoc($res)) {
+			$lang = $row['lg_iso_2'].($row['lg_country_iso_2']?'_'.$row['lg_country_iso_2']:'');
+		}
+		
+		return $lang ? $lang : $csConvObj->conv_case('utf-8',$langCodeT3,'toUpper');
+	}
+	
+	/*
+	 *
+	 * Returns the locale to used when sorting labels
+	 *
+	 * @return	string	locale
+	 */
+	function getCollateLocale() {
+		global $LANG, $TSFE, $TYPO3_DB;
+		
 		if (is_object($LANG)) {
 			$langCodeT3 = $LANG->lang;
 		} elseif (is_object($TSFE)) {
 			$langCodeT3 = $TSFE->lang;
 		} else {
-			return 'EN';
+			return 'C';
 		}
-
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('lg_iso_2', 'static_languages', 'lg_typo3='.$GLOBALS['TYPO3_DB']->fullQuoteStr($langCodeT3,'static_languages'));
-		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			$lang = $row['lg_iso_2'];
+		
+		$res = $TYPO3_DB->exec_SELECTquery(
+			'lg_collate_locale',
+			'static_languages',
+			'lg_typo3='.$TYPO3_DB->fullQuoteStr($langCodeT3,'static_languages')
+			);
+		while ($row = $TYPO3_DB->sql_fetch_assoc($res)) {
+			$locale = $row['lg_collate_locale'];
 		}
-
-		return $lang ? $lang : strtoupper($langCodeT3);
+		return $locale ? $locale : 'C';
 	}
-
-
+	
 	/**
-	 * fetches short title from an iso code
+	 * Fetches short title from an iso code
 	 *
 	 * @param	string		table name
 	 * @param	string		iso code
 	 * @param	string		language code - if not set current default language is used
+	 * @param	boolean		local name only - if set local title is returned
 	 * @return	string		short title
 	 */
-	function getTitleFromIsoCode($table, $isoCode, $lang='') {
+	function getTitleFromIsoCode($table, $isoCode, $lang='', $local=FALSE) {
+		global $TSFE, $TYPO3_DB;
+		
 		$title = '';
-
-		$titleField = tx_staticinfotables_div::getTCAlabelField($table, true, $lang);
-
-		$fields = $table.'.'.$titleField;
-
-		$isoCodeField = tx_staticinfotables_div::getIsoCodeField($table, $isoCode);
-
-		if (is_object($GLOBALS['TSFE'])) {
-			$enableFields = $GLOBALS['TSFE']->sys_page->enableFields($table);
+		$titleFields = tx_staticinfotables_div::getTCAlabelField($table, TRUE, $lang, $local);
+		$prefixedTitleFields = array();
+		foreach ($titleFields as $titleField) {
+			$prefixedTitleFields[] = $table.'.'.$titleField;
+		}
+		$fields = implode(',', $prefixedTitleFields);
+		$whereClause = '';
+		if (!is_array($isoCode)) {
+			$isoCode = array($isoCode);
+		}
+		$index = 0;
+		foreach ($isoCode as $index => $code) {
+			$whereClause .= ($index?' AND ':'').$table.'.'.tx_staticinfotables_div::getIsoCodeField($table, $code, TRUE, $index).'='.$TYPO3_DB->fullQuoteStr($code,$table);
+		}
+		
+		if (is_object($TSFE)) {
+			$enableFields = $TSFE->sys_page->enableFields($table);
 		} else {
 			$enableFields = t3lib_BEfunc::deleteClause($table);
 		}
-
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, $table.'.'.$isoCodeField.'='.$GLOBALS['TYPO3_DB']->fullQuoteStr($isoCode,$table).$enableFields);
-		if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))	{
-			$title = $row[$titleField];
+		
+		$res = $TYPO3_DB->exec_SELECTquery(
+			$fields,
+			$table,
+			$whereClause.$enableFields
+			);
+		if ($row = $TYPO3_DB->sql_fetch_assoc($res))	{
+			foreach ($titleFields as $titleField) {
+				if ($row[$titleField]) return $row[$titleField];
+			}
 		}
-
+		
 		return $title;
 	}
 
@@ -224,12 +272,12 @@ class tx_staticinfotables_div {
 			$indexField = $indexField ? $indexField : 'uid';
 
 			$lang = strtolower(tx_staticinfotables_div::getCurrentLanguage());
-
-			$titleField = tx_staticinfotables_div::getTCAlabelField($table);
-
-			$fields = $table.'.'.$indexField.','.$table.'.'.$titleField;
-
-
+			$titleFields = tx_staticinfotables_div::getTCAlabelField($table, TRUE, $lang);
+			$prefixedTitleFields = array();
+			foreach ($titleFields as $titleField) {
+				$prefixedTitleFields[] = $table.'.'.$titleField;
+			}
+			$fields = $table.'.'.$indexField.','.implode(',', $prefixedTitleFields);
 
 			if ($params['config']['itemsProcFunc_config']['prependHotlist']) {
 
@@ -254,7 +302,12 @@ class tx_staticinfotables_div {
 				$rows = array();
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))	{
 					#$params['items'][] = array($row[$titleField], $row[$indexField], '');
-					$rows[$row[$indexField]] = $row[$titleField];
+					foreach ($titleFields as $titleField) {
+						if ($row[$titleField]) {
+							$rows[$row[$indexField]] = $row[$titleField];
+							break;
+						}
+					}
 					$cnt++;
 				}
 
@@ -266,28 +319,27 @@ class tx_staticinfotables_div {
 					$params['items'][] = array($title, $index, '');
 					$cnt++;
 				}
-				if($cnt AND !$params['config']['itemsProcFunc_config']['hotlistOnly']) {
+				if($cnt && !$params['config']['itemsProcFunc_config']['hotlistOnly']) {
 					$params['items'][] = array('--------------', '', '');
 				}
-
 			}
-
-
+			
 				// Set ORDER BY:
-			#$orderBy = ($TCA[$table]['ctrl']['sortby']) ? 'ORDER BY '.$TCA[$table]['ctrl']['sortby'] : $TCA[$table]['ctrl']['default_sortby'];
-			#$orderBy = $GLOBALS['TYPO3_DB']->stripOrderBy($orderBy);
-			$orderBy = $titleField;
-
+			$orderBy = $titleFields[0];
+			
 			if(!$params['config']['itemsProcFunc_config']['hotlistOnly']) {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, '1'.t3lib_BEfunc::deleteClause($table), '', $orderBy);
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))	{
-					$params['items'][] = array($row[$titleField], $row[$indexField], '');
+				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					foreach ($titleFields as $titleField) {
+						if ($row[$titleField]) {
+							$params['items'][] = array($row[$titleField], $row[$indexField], '');
+							break;
+						}
+					}
 				}
 			}
-			#debug($params['items']);
 		}
 	}
-
 
 	/**
 	 * Updates the hotlist table.
@@ -301,7 +353,7 @@ class tx_staticinfotables_div {
 	 */
 	function updateHotlist ($table, $indexValue, $indexField='', $app='') {
 
-		if ($table AND $indexValue) {
+		if ($table && $indexValue) {
 			$indexField = $indexField ? $indexField : 'uid';
 			$app = $app ? $app : TYPO3_MODE;
 

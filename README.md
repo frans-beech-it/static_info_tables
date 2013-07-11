@@ -1,15 +1,16 @@
 # TYPO3 Extension "static_info_tables"
 Data and API for countries, languages and currencies.
 
-## Version 1.8.0
+## Version 2.0.0
 ** BE AWARE: This extension has been marked as insecure by the security team! **.
 
 
 
 <table>
-	<tr><td>Version</td><td>1.8.0 stable</td></tr>
-	<tr><td>Release date</td><td>17. January 2006</td></tr>
+	<tr><td>Version</td><td>2.0.0 stable</td></tr>
+	<tr><td>Release date</td><td>21. June 2006</td></tr>
 	<tr><td>Author</td><td>Ren Fritz</td></tr>
+	<tr><td>Comment</td><td>This version requires TYPO3 4.0.</td></tr>
 </table>
 
 ## !! Attention !!
