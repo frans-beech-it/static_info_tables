@@ -1,81 +1,150 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-#t3lib_extMgm::addToInsertRecords('tx_staticinfotables_dummy');
+require_once(t3lib_extMgm::extPath($_EXTKEY).'class.tx_staticinfotables_div.php');
 
 
-
-$TCA['static_countries'] = Array (
-   'ctrl' => Array (
-      'label' => 'cn_short_local',
-		'readOnly' => 1,	// This should always be true, as it prevents the static data from being altered
-//		'adminOnly' => 1,	// Only admin, if any
-		'rootLevel' => 1,
-		'is_static' => 1,
-      'default_sortby' => 'ORDER BY cn_short_local',
-      'title' => 'Static countries||Länder Referenz',
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY)."icon_static_countries.gif",
-   ),
-   'interface' => Array (
-      'showRecordFieldList' => 'cn_iso_2,cn_iso_3,cn_iso_nr,cn_official_name_local,cn_official_name_en,cn_capital,cn_tldomain,cn_currency_iso_3,cn_currency_iso_nr,cn_phone,cn_eu_member,cn_address_format,cn_short_en,cn_short_dk,cn_short_de'
-   )
+$TYPO3_CONF_VARS['EXTCONF'][$_EXTKEY]['tables'] = array (
+	'static_countries' => array(
+		'label_fields' => array(	// possible label fields for different languages. Default as last.
+			'cn_short_##', 'cn_short_en',
+		)
+	),
+	'static_languages' => array(
+		'label_fields' => array(
+			'lg_name_##', 'lg_name_en',
+		)
+	),
+	'static_currencies' => array(
+		'label_fields' => array(
+			'cu_name_##', 'cu_name_en',
+		)
+	),
 );
 
 
-
-$TCA['static_currencies'] = Array (
-   'ctrl' => Array (
-      'label' => 'cu_name_en',
+$TCA['static_countries'] = array (
+	'ctrl' => array (
+		'label' => 'cn_short_en',
+		'label_alt' => 'cn_short_en,cn_iso_2',
 		'readOnly' => 1,	// This should always be true, as it prevents the static data from being altered
-//		'adminOnly' => 1,	// Only admin, if any
+		'adminOnly' => 1,
+		'rootLevel' => 1,
+		'is_static' => 1,
+		'default_sortby' => 'ORDER BY cn_short_en',
+		'title' => 'LLL:EXT:'.$_EXTKEY.'/locallang_db.php:static_countries.title',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_countries.gif',
+
+		// have a look in locallang_db.php:
+		// 'label' => tx_staticinfotables_div::getTCAlabelField('static_countries'),
+		// 'default_sortby' => 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_countries'),
+		// when this file is read there's no language initialized ...
+	),
+	'interface' => array (
+		'showRecordFieldList' => 'cn_iso_2,cn_iso_3,cn_iso_nr,cn_official_name_local,cn_official_name_en,cn_capital,cn_tldomain,cn_currency_iso_3,cn_currency_iso_nr,cn_phone,cn_eu_member,cn_address_format,cn_short_en,cn_short_dk,cn_short_de'
+	)
+);
+
+
+$TCA['static_country_zones'] = array (
+	'ctrl' => array (
+		'label' => 'zn_name_local',
+		'label_alt' => 'zn_name_local,zn_code',
+		'readOnly' => 1,
+		'adminOnly' => 1,
+		'rootLevel' => 1,
+		'is_static' => 1,
+		'default_sortby' => 'ORDER BY zn_name_local',
+		'title' => 'LLL:EXT:'.$_EXTKEY.'/locallang_db.php:static_country_zones.title',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_countries.gif',
+	),
+	'interface' => array (
+		'showRecordFieldList' => 'zn_country_iso_nr,zn_country_iso_3,zn_code,zn_name_local'
+	)
+);
+
+
+$TCA['static_languages'] = array (
+	'ctrl' => array (
+		'label' => 'lg_name_en',
+		'label_alt' => 'lg_name_en,lg_iso_2',
+		'readOnly' => 1,
+		'adminOnly' => 1,
+		'rootLevel' => 1,
+		'is_static' => 1,
+		'default_sortby' => 'ORDER BY lg_name_en',
+		'title' => 'LLL:EXT:'.$_EXTKEY.'/locallang_db.php:static_languages.title',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_languages.gif',
+	),
+	'interface' => array (
+		'showRecordFieldList' => 'lg_name_en,lg_iso_2,lg_typo3,lg_name_fr,lg_name_de,lg_name_es,lg_name_nl'
+	)
+);
+
+
+$TCA['static_currencies'] = array (
+	'ctrl' => array (
+		'label' => 'cu_name_en',
+		'label_alt' => 'cu_name_en,cu_iso_3',
+		'readOnly' => 1,
+		'adminOnly' => 1,
 		'rootLevel' => 1,
 		'is_static' => 1,
 		'default_sortby' => 'ORDER BY cu_name_en',
-      'title' => 'Static currencies',
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY)."icon_static_currencies.gif",
-   ),
-   'interface' => Array (
-      'showRecordFieldList' => 'cu_iso_3,cu_iso_nr,cu_name_en,cu_name_de,cu_symbol_left,cu_symbol_right,cu_thousands_point,cu_decimal_point,cu_decimal_digits,cu_sub_name_en,cu_sub_name_de,cu_sub_divisor,cu_sub_symbol_left,cu_sub_symbol_right'
-   )
+		'title' => 'LLL:EXT:'.$_EXTKEY.'/locallang_db.php:static_currencies.title',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_currencies.gif',
+	),
+	'interface' => array (
+		'showRecordFieldList' => 'cu_iso_3,cu_iso_nr,cu_name_en,cu_name_de,cu_symbol_left,cu_symbol_right,cu_thousands_point,cu_decimal_point,cu_decimal_digits,cu_sub_name_en,cu_sub_name_de,cu_sub_divisor,cu_sub_symbol_left,cu_sub_symbol_right'
+	)
 );
 
 
+//$TCA['cc_static_countries']['ctrl']['readOnly'] = 0;
+//$TCA['cc_static_languages']['ctrl']['readOnly'] = 0;
+//$TCA['cc_static_country_zones']['ctrl']['readOnly'] = 0;
+//$TCA['cc_static_currencies']['ctrl']['readOnly'] = 0;
 
-$TCA['static_languages'] = Array (
-   'ctrl' => Array (
-      'label' => 'lg_name_en',
-		'readOnly' => 1,	// This should always be true, as it prevents the static templates from being altered
-//		'adminOnly' => 1,	// Only admin, if any
-		'rootLevel' => 1,
-		'is_static' => 1,
-      'default_sortby' => 'ORDER BY lg_name_en',
-      'title' => 'Languages||Sprachen',
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY)."icon_static_languages.gif",
-   ),
-   'interface' => Array (
-      'showRecordFieldList' => 'lg_iso_2,lg_name_en'
-   )
-);
 
-$TCA['static_country_zones'] = Array (
-   'ctrl' => Array (
-      'label' => 'zn_name_local',
-		'readOnly' => 1,	// This should always be true, as it prevents the static data from being altered
-//		'adminOnly' => 1,	// Only admin, if any
-		'rootLevel' => 1,
-		'is_static' => 1,
-      'default_sortby' => 'ORDER BY zn_name_local',
-      'title' => 'Static country zones',
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY)."icon_static_countries.gif",
-   ),
-   'interface' => Array (
-      'showRecordFieldList' => 'zn_country_iso_nr,zn_country_iso_3,zn_code,zn_name_local'
-   )
-);
+
+
+
+
+// ******************************************************************
+// sys_language
+// ******************************************************************
+
+t3lib_div::loadTCA('sys_language');
+$TCA['sys_language']['columns']['static_lang_isocode']['config'] = array (
+			'type' => 'select',
+			'items' => Array (
+				Array('',0),
+			),
+			#'foreign_table' => 'static_languages',
+			#'foreign_table_where' => 'AND static_languages.pid=0 ORDER BY static_languages.lg_name_en',
+			'itemsProcFunc' => 'tx_staticinfotables_div->selectItemsTCA',
+			'itemsProcFunc_config' => array (
+				'table' => 'static_languages',
+				'indexField' => 'uid',
+				// I think that will make more sense in the future
+				// 'indexField' => 'lg_iso_2',
+				'prependHotlist' => 1,
+				//	defaults:
+				//'hotlistLimit' => 8,
+				//'hotlistSort' => 1,
+				//'hotlistOnly' => 0,
+				//'hotlistApp' => TYPO3_MODE,
+			),
+			'size' => 1,
+			'minitems' => 0,
+			'maxitems' => 1,
+	    );
+
+$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:static_info_tables/class.tx_staticinfotables_syslanguage.php:&tx_staticinfotables_syslanguage';
 
 
 

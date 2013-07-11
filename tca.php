@@ -3,7 +3,6 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 
 
-
 $TCA['static_countries'] = Array (
 	'ctrl' => $TCA['static_countries']['ctrl'],
 
@@ -135,10 +134,15 @@ $TCA['static_countries'] = Array (
 			'config' => Array (
 				'type' => 'select',
 				'items' => Array (
-				Array('',"0"),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_1',"1"),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_2',"2"),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_3',"3"),
+				Array('','0'),
+				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_1','1'),
+				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_2','2'),
+				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_3','3'),
+				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_4','4'),
+				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_5','5'),
+				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_6','6'),
+				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_7','7'),
+				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_8','8'),
 				),
 				'default' => '0'
 			)
@@ -202,20 +206,20 @@ $TCA['static_countries'] = Array (
 		)
 	),
 	'palettes'	=> Array (
-			'1' => Array(
-				'showitem' => 'cn_iso_nr,cn_iso_2,cn_iso_3', 'canNotCollapse' => '1'
-			),
-			'2' => Array(
-				'showitem' => 'cn_currency_iso_nr,cn_currency_iso_3', 'canNotCollapse' => '1'
-			),
-			'3' => Array(
-				'showitem' => 'cn_capital,cn_eu_member,cn_phone,cn_tldomain', 'canNotCollapse' => '1'
-			),
-			'4' => Array(
-				'showitem' => 'cn_address_format,cn_zone_flag', 'canNotCollapse' => '1'
-			)
+		'1' => Array(
+			'showitem' => 'cn_iso_nr,cn_iso_2,cn_iso_3', 'canNotCollapse' => '1'
+		),
+		'2' => Array(
+			'showitem' => 'cn_currency_iso_nr,cn_currency_iso_3', 'canNotCollapse' => '1'
+		),
+		'3' => Array(
+			'showitem' => 'cn_capital,cn_eu_member,cn_phone,cn_tldomain', 'canNotCollapse' => '1'
+		),
+		'4' => Array(
+			'showitem' => 'cn_address_format,cn_zone_flag', 'canNotCollapse' => '1'
 		)
-	);
+	)
+);
 
 
 
@@ -387,17 +391,17 @@ $TCA['static_currencies'] = Array (
 		)
 	),
 	'palettes'	=> Array (
-			'1' => Array(
-				'showitem' => 'cu_iso_nr,cu_iso_3', 'canNotCollapse' => '1'
-			),
-			'2' => Array(
-				'showitem' => 'cu_symbol_left,cu_symbol_right,cu_thousands_point,cu_decimal_point', 'canNotCollapse' => '1'
-			),
-			'3' => Array(
-				'showitem' => 'cu_sub_symbol_left,cu_sub_symbol_right,cu_decimal_digits,cu_sub_divisor', 'canNotCollapse' => '1'
-			)
+		'1' => Array(
+			'showitem' => 'cu_iso_nr,cu_iso_3', 'canNotCollapse' => '1'
+		),
+		'2' => Array(
+			'showitem' => 'cu_symbol_left,cu_symbol_right,cu_thousands_point,cu_decimal_point', 'canNotCollapse' => '1'
+		),
+		'3' => Array(
+			'showitem' => 'cu_sub_symbol_left,cu_sub_symbol_right,cu_decimal_digits,cu_sub_divisor', 'canNotCollapse' => '1'
 		)
-	);
+	)
+);
 
 
 
@@ -405,7 +409,7 @@ $TCA['static_languages'] = Array (
 	'ctrl' => $TCA['static_languages']['ctrl'],
 
 	'interface' => Array (
-		'showRecordFieldList' => 'lg_iso_2,lg_name_en'
+		'showRecordFieldList' => 'lg_name_en,lg_iso_2,lg_typo3,lg_name_fr,lg_name_de,lg_name_es,lg_name_nl'
 	),
 	'columns' => Array (
 		'lg_iso_2' => Array (
@@ -429,14 +433,69 @@ $TCA['static_languages'] = Array (
 				'eval' => 'trim',
 				'default' => ''
 			)
-		)
+		),
+		'lg_name_fr' => Array (
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_name_fr',
+			'exclude' => '0',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '18',
+				'max' => '40',
+				'eval' => 'trim',
+				'default' => ''
+			)
+		),
+		'lg_name_de' => Array (
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_name_de',
+			'exclude' => '0',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '18',
+				'max' => '40',
+				'eval' => 'trim',
+				'default' => ''
+			)
+		),
+		'lg_name_es' => Array (
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_name_es',
+			'exclude' => '0',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '18',
+				'max' => '40',
+				'eval' => 'trim',
+				'default' => ''
+			)
+		),
+		'lg_name_nl' => Array (
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_name_nl',
+			'exclude' => '0',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '18',
+				'max' => '40',
+				'eval' => 'trim',
+				'default' => ''
+			)
+		),
+		'lg_typo3' => Array (
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_typo3',
+			'exclude' => '0',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '3',
+				'max' => '2',
+				'eval' => '',
+				'default' => ''
+			)
+		),
 	),
 	'types' => Array (
 		'1' => Array (
-			'showitem' => 'lg_name_en,lg_iso_2'
+			'showitem' => 'lg_name_en,lg_iso_2,lg_typo3,lg_name_fr,lg_name_de,lg_name_es,lg_name_nl'
 		)
 	)
-	);
+);
 
 
 
@@ -510,13 +569,21 @@ $TCA['static_country_zones'] = Array (
 		)
 	),
 	'palettes'	=> Array (
-			'1' => Array(
-				'showitem' => 'zn_country_iso_nr,zn_country_iso_2,zn_country_iso_3', 'canNotCollapse' => '1'
-			)
+		'1' => Array(
+			'showitem' => 'zn_country_iso_nr,zn_country_iso_2,zn_country_iso_3', 'canNotCollapse' => '1'
 		)
+	)
+);
 
-	);
 
+$TCA['static_countries']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_countries', false);
+$TCA['static_countries']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_countries', false);
+
+$TCA['static_languages']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_languages', false);
+$TCA['static_languages']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_languages', false);
+
+$TCA['static_currencies']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_currencies');
+$TCA['static_currencies']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_currencies', false);
 
 
 ?>

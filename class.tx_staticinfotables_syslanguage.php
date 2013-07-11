@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2004-2008 RenÃ© Fritz (r.fritz@colorcube.de)
+*  (c) 2004 René Fritz (r.fritz@colorcube.de)
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is
@@ -24,9 +24,7 @@
 /**
  * example for using the hotlist functionality with the sys_language table
  *
- * $Id: class.tx_staticinfotables_syslanguage.php 8613 2008-03-16 07:07:25Z franzholz $
- *
- * @author	RenÃ© Fritz <r.fritz@colorcube.de>
+ * @author	René Fritz <r.fritz@colorcube.de>
  * @package TYPO3
  */
 
@@ -35,12 +33,12 @@
 /**
  * example for using the hotlist functionality with the sys_language table
  *
- * @author	RenÃ© Fritz <r.fritz@colorcube.de>
+ * @author	René Fritz <r.fritz@colorcube.de>
  * @package TYPO3
  */
 class tx_staticinfotables_syslanguage {
 
-	function processDatamap_postProcessFieldArray($status, $table, $id, $fieldArray, &$pObj) {
+	function processDatamap_postProcessFieldArray($status, $table, $id, $fieldArray, $this) {
 		if($table == 'sys_language' AND $fieldArray['static_lang_isocode']) {
 				// the hotlist will be updated only if the field changed, because only then it's in the $fieldArray
 			tx_staticinfotables_div::updateHotlist ('static_languages', $fieldArray['static_lang_isocode'], 'uid');
@@ -49,7 +47,7 @@ class tx_staticinfotables_syslanguage {
 }
 
 
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_syslanguage.php'])    {
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_syslanguage.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_syslanguage.php'])    {
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_syslanguage.php']);
 }
 ?>
