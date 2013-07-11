@@ -50,7 +50,7 @@ class ext_update  {
 		if(t3lib_div::_GP('convert') AND $destEncoding = t3lib_div::_GP('dest_encoding')) {
 			foreach ($tables as $table) {
 				$content .= '<p>'.htmlspecialchars($table.' > '.$destEncoding).'</p>';
-				tx_ccinfotablesmgm_div::convertEncodingTable($table, 'utf-8', $destEncoding);
+				tx_staticinfotables_encoding::convertEncodingTable($table, 'utf-8', $destEncoding);
 			}
 			$content .= '<p>Done</p>';
 
@@ -62,7 +62,7 @@ class ext_update  {
 			$content .= 'This conversion works only once. When you converted the tables and you want to do it again to another encoding you have to reinstall the tables with the Extension Manager.';
 			$content .= '<br /><br />';
             $content .= 'Destination character encoding:';
-            $content .= '<br />'.tx_ccinfotables_encoding::getEncodingSelect('dest_encoding', '', '', 'utf-8');
+            $content .= '<br />'.tx_staticinfotables_encoding::getEncodingSelect('dest_encoding', '', '', 'utf-8');
 			$content .= '<br /><br />';
 			$content .= '<input type="submit" name="convert" value="Convert" />';
 			$content .= '</form>';

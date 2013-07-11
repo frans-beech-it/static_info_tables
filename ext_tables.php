@@ -96,10 +96,10 @@ $TCA['static_currencies'] = array(
 );
 
 
-//$TCA['cc_static_countries']['ctrl']['readOnly'] = 0;
-//$TCA['cc_static_languages']['ctrl']['readOnly'] = 0;
-//$TCA['cc_static_country_zones']['ctrl']['readOnly'] = 0;
-//$TCA['cc_static_currencies']['ctrl']['readOnly'] = 0;
+//$TCA['static_countries']['ctrl']['readOnly'] = 0;
+//$TCA['static_languages']['ctrl']['readOnly'] = 0;
+//$TCA['static_country_zones']['ctrl']['readOnly'] = 0;
+//$TCA['static_currencies']['ctrl']['readOnly'] = 0;
 
 
 // Unfortunately this do not work because the user will be initialized afterwards
