@@ -1,9 +1,17 @@
+2013-05-25  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #48524: Missing file Classes/Domain/Model/LanguageExtensible.php
+	* Resolves #48528: Error in update script on TYPO3 6.1.1
+	* Update version to 6.0.1
+
 2013-05-23  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Fix extended domain model classes loading after class loader cache is cleared
 	* Improve class cache handling
 	* Relax extension conflicts
 	* Update manual
+	* GeneralUtility::loadTCA is deprecated in TYPO3 6.1
+	* Follow-up to GeneralUtility::loadTCA is deprecated in TYPO3 6.1
 
 2013-05-22  Stanislas Rolland  <typo3@sjbr.ca>
 
