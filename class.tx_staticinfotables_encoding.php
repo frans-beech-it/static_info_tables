@@ -24,7 +24,7 @@
 /**
  * Functions to convert the character encoding of the static info tables
  *
- * $Id: class.tx_staticinfotables_encoding.php 3909 2006-10-11 19:36:33Z franzholz $
+ * $Id: class.tx_staticinfotables_encoding.php 8613 2008-03-16 07:07:25Z franzholz $
  *
  * @author	René Fritz <r.fritz@colorcube.de>
  * @package TYPO3
@@ -186,7 +186,7 @@ class tx_staticinfotables_encoding {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_encoding.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_encoding.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_encoding.php'])	{
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_encoding.php']);
 }
 ?>

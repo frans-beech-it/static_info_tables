@@ -1,16 +1,16 @@
 # TYPO3 Extension "static_info_tables"
 Data and API for countries, languages and currencies.
 
-## Version 2.0.6
+## Version 2.0.7
 ** BE AWARE: This extension has been marked as insecure by the security team! **.
 
 
 
 <table>
-	<tr><td>Version</td><td>2.0.6 stable</td></tr>
-	<tr><td>Release date</td><td>19. January 2008</td></tr>
+	<tr><td>Version</td><td>2.0.7 stable</td></tr>
+	<tr><td>Release date</td><td>20. March 2008</td></tr>
 	<tr><td>Author</td><td>Ren Fritz</td></tr>
-	<tr><td>Comment</td><td>Store the character set for import in the EM by yourself. Enable multiple selection of countries and others in the select box API. Remove dependancy from div.</td></tr>
+	<tr><td>Comment</td><td>remove dependancy from div extension  fix bug 6059: Static_country_zones Canada wrong ISO-Nr 142 instead of correct 124 fix bug with not set default country  replace $TYPO3_CONF_VARS by $GLOBALS[TYPO3_CONF_VARS]</td></tr>
 </table>
 
 ## !! Attention !!
