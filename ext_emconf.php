@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'description' => 'Some database tables with usefull informations about countries, languages and currencies. Still lacks some data but the overall concept is stable. Install the extension div version 0.0.5 before you make an update!',
 	'category' => 'misc',
 	'shy' => 0,
-	'version' => '2.0.2',
+	'version' => '2.0.3',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -27,7 +27,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'modify_tables' => '',
 	'clearcacheonload' => 0,
 	'lockType' => '',
-	'author' => 'RenÃ© Fritz',
+	'author' => 'René Fritz',
 	'author_email' => 'r.fritz@colorcube.de',
 	'author_company' => 'Colorcube - digital media lab, www.colorcube.de',
 	'CGLcompliance' => NULL,
@@ -36,8 +36,8 @@ $EM_CONF[$_EXTKEY] = array (
 	array (
 		'depends' => 
 		array (
-			'typo3' => '4.0-',
-			'php' => '4.1.0-',
+			'typo3' => '4.0-0.0.0',
+			'php' => '4.1.0-0.0.0',
 			'div' => '0.0.5-',
 		),
 		'conflicts' => 

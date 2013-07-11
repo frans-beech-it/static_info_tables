@@ -24,7 +24,7 @@
 /**
  * Misc functions to access the static info tables
  *
- * $Id: class.tx_staticinfotables_div.php 4563 2007-01-13 04:37:36Z franzholz $
+ * $Id: class.tx_staticinfotables_div.php 5276 2007-04-03 17:06:11Z dbruehlmeier $
  *
  * @author	René Fritz <r.fritz@colorcube.de>
  * @package TYPO3
@@ -313,7 +313,7 @@ class tx_staticinfotables_div {
 						$table,
 						'tx_staticinfotables_hotlist',
 						'',	// $foreign_table
-						'AND tx_staticinfotables_hotlist.application='.$GLOBALS['TYPO3_DB']->fullQuoteStr($app,'tx_staticinfotables_hotlist'),
+						'AND tx_staticinfotables_hotlist.tablenames='.$GLOBALS['TYPO3_DB']->fullQuoteStr($table,'tx_staticinfotables_hotlist').' AND tx_staticinfotables_hotlist.application='.$GLOBALS['TYPO3_DB']->fullQuoteStr($app,'tx_staticinfotables_hotlist'),
 						'',
 						'tx_staticinfotables_hotlist.sorting DESC',	// $orderBy
 						$limit
