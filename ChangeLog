@@ -1,3 +1,24 @@
+2013-02-20  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Fixed issue #39552: Default TS constants contain superfluous dot
+	* Added feature #45626: Update countries to level of ISO 3166-1:2006 - Newsletter VI-12 (2012-02-15)
+	* Added feature #45626: Update countries to level of ISO 3166-1:2006 - Newsletter VI-14 (2013-02-06)
+	* Added feature #43009: Add federal states of croatia to static_country_zones
+	* Fixed issue #45372: Update Åland Islands tdl
+	* Added feature #45630: Update currencies in accordance with ISO 4217 Amendment Number 154
+	* Fixed issue #35775: Remove redundant indexes
+	* Fixed issue #40509: Wrong ISO codes for currency Serbian Dinar
+	* Follow up to feature #45630: Update currencies in accordance with ISO 4217 Amendment Number 154
+	* Update version to 2.3.2
+
+2013-02-19  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Update version to 2.3.1
+
+2012-05-29  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Fixed security issue [Ticket#2011101510000057] XSS in static_info_tables 2.3.0
+
 2011-12-16  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Fixed issue #32614: Errors in names of two provinces of Italy
