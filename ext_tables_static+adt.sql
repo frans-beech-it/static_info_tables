@@ -501,8 +501,8 @@ CREATE TABLE static_currencies (
   cu_sub_divisor int(11) DEFAULT '1' NOT NULL,
   cu_sub_symbol_left varchar(12) DEFAULT '' NOT NULL,
   cu_sub_symbol_right varchar(12) DEFAULT '' NOT NULL,
-  cn_name_de varchar(40) DEFAULT '' NOT NULL,
-  cn_sub_name_de varchar(20) DEFAULT '' NOT NULL,
+  cu_name_de varchar(40) DEFAULT '' NOT NULL,
+  cu_sub_name_de varchar(20) DEFAULT '' NOT NULL,
   UNIQUE uid (uid),
   KEY parent (pid)
 );
