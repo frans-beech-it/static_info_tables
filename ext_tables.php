@@ -1,10 +1,6 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-require_once(t3lib_extMgm::extPath($_EXTKEY).'class.tx_staticinfotables_div.php');
-
-
-
 
 $TCA['static_countries'] = array (
 	'ctrl' => array (
@@ -120,7 +116,7 @@ $TCA['sys_language']['columns']['static_lang_isocode']['config'] = array (
 			'size' => 1,
 			'minitems' => 0,
 			'maxitems' => 1,
-	    );
+		);
 
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:static_info_tables/class.tx_staticinfotables_syslanguage.php:&tx_staticinfotables_syslanguage';
 

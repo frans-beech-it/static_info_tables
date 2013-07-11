@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2004 René Fritz (r.fritz@colorcube.de)
+*  (c) 2004-2005 René Fritz (r.fritz@colorcube.de)
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is
@@ -63,7 +63,7 @@ class tx_staticinfotables_div {
 	 * @param	boolean		If set (default) the TCA definition of the table should be loaded with t3lib_div::loadTCA(). It will be needed to set it to false if you call this function from inside of tca.php
 	 * @return	string		field name
 	 */
-	function getTCAlabelField($table, $loadTCA=true) {
+	function getTCAlabelField($table, $loadTCA=true, $lang='') {
 		global $TYPO3_CONF_VARS, $TCA;
 
 		$labelField = '';
@@ -72,7 +72,7 @@ class tx_staticinfotables_div {
 				t3lib_div::loadTCA($table);
 			}
 
-			$lang = strtolower(tx_staticinfotables_div::getCurrentLanguage());
+			$lang = $lang ? $lang : strtolower(tx_staticinfotables_div::getCurrentLanguage());
 
 			foreach ($TYPO3_CONF_VARS['EXTCONF']['static_info_tables']['tables'][$table]['label_fields'] as $field) {
 				$labelField = str_replace ('##', $lang, $field);
@@ -82,6 +82,52 @@ class tx_staticinfotables_div {
 			}
 		}
 		return $labelField;
+	}
+
+
+	/**
+	 * Returns the type of an iso code: nr, 2, 3
+	 *
+	 * @param	string		iso code
+	 * @return	string		iso code type
+	 */
+	function isoCodeType($isoCode) {
+		$type = false;
+		if (t3lib_div::testInt($isoCode)) {
+			$type = 'nr';
+		} elseif (strlen($isoCode) == 2) {
+			$type = '2';
+		} elseif (strlen($isoCode) == 3) {
+			$type = '3';
+		}
+		return $type;
+	}
+
+
+	/**
+	 * Returns a iso code field for the passed table and iso code
+	 *
+	 * @param	string		table name
+	 * @param	string		iso code
+	 * @param	boolean		If set (default) the TCA definition of the table should be loaded with t3lib_div::loadTCA(). It will be needed to set it to false if you call this function from inside of tca.php
+	 * @return	string		field name
+	 */
+	function getIsoCodeField($table, $isoCode, $loadTCA=true) {
+		global $TYPO3_CONF_VARS, $TCA;
+
+		if($isoCode AND $table AND ($isoCodeField = $TYPO3_CONF_VARS['EXTCONF']['static_info_tables']['tables'][$table]['isocode_field'])) {
+			if($loadTCA) {
+				t3lib_div::loadTCA($table);
+			}
+
+			$type = tx_staticinfotables_div::isoCodeType($isoCode);
+
+			$isoCodeField = str_replace ('##', $type, $isoCodeField);
+			if(is_array($TCA[$table]['columns'][$isoCodeField])) {
+				return $isoCodeField;
+			}
+		}
+		return false;
 	}
 
 
@@ -163,6 +209,36 @@ class tx_staticinfotables_div {
 	}
 
 
+	/**
+	 * fetches short title from an iso code
+	 *
+	 * @param	string		table name
+	 * @param	string		iso code
+	 * @param	string		language code - if not set current default language is used
+	 * @return	string		short title
+	 */
+	function getTitleFromIsoCode($table, $isoCode, $lang='') {
+		$title = '';
+
+		$titleField = tx_staticinfotables_div::getTCAlabelField($table, true, $lang);
+
+		$fields = $table.'.'.$titleField;
+
+		$isoCodeField = tx_staticinfotables_div::getIsoCodeField($table, $isoCode);
+
+		if (is_object($GLOBALS['TSFE'])) {
+			$enableFields = $GLOBALS['TSFE']->sys_page->enableFields($table);
+		} else {
+			$enableFields = t3lib_BEfunc::deleteClause($table);
+		}
+
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, $table.'.'.$isoCodeField.'="'.$GLOBALS['TYPO3_DB']->quoteStr($isoCode,$table).'"'.$enableFields);
+		if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))	{
+			$title = $row[$titleField];
+		}
+
+		return $title;
+	}
 
 
 	/**
@@ -325,6 +401,6 @@ class tx_staticinfotables_div {
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_div.php'])    {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_div.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.tx_staticinfotables_div.php']);
 }
 ?>
