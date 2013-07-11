@@ -1,16 +1,16 @@
 # TYPO3 Extension "static_info_tables"
 Data and API for countries, languages and currencies.
 
-## Version 2.0.3
+## Version 2.0.4
 ** BE AWARE: This extension has been marked as insecure by the security team! **.
 
 
 
 <table>
-	<tr><td>Version</td><td>2.0.3 stable</td></tr>
-	<tr><td>Release date</td><td>16. May 2007</td></tr>
+	<tr><td>Version</td><td>2.0.4 stable</td></tr>
+	<tr><td>Release date</td><td>16. June 2007</td></tr>
 	<tr><td>Author</td><td>Ren Fritz</td></tr>
-	<tr><td>Comment</td><td>New table static_markets for international market places following the ISO-Standard 10383.</td></tr>
+	<tr><td>Comment</td><td>support for custom where clauses with static_info_tables by Jeff Segars -- Fix bug with PHP 5.2.2.</td></tr>
 </table>
 
 ## !! Attention !!

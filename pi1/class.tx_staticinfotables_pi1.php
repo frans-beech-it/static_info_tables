@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2004-2006 Stanislas Rolland <stanislas.rolland(arobas)fructifor.ca>
+*  (c) 2004-2007 Stanislas Rolland <stanislas.rolland(arobas)fructifor.ca>
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is
@@ -28,7 +28,7 @@
  *
  * Class for handling static info tables: countries, and subdivisions, currencies, languages and taxes
  *
- * $Id: class.tx_staticinfotables_pi1.php 4563 2007-01-13 04:37:36Z franzholz $
+ * $Id: class.tx_staticinfotables_pi1.php 5696 2007-06-16 08:30:15Z franzholz $
  *
  * @author	Stanislas Rolland <stanislas.rolland(arobas)fructifor.ca>
  */
