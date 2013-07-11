@@ -1,18 +1,15 @@
 # TYPO3 Extension "static_info_tables"
 Data and API for countries, languages and currencies.
 
-## Version 2.1.2
+## Version 2.2.0
 ** BE AWARE: This extension has been marked as insecure by the security team! **.
 
 
 
 <table>
-	<tr><td>Version</td><td>2.1.2 stable</td></tr>
-	<tr><td>Release date</td><td>31. January 2010</td></tr>
+	<tr><td>Version</td><td>2.2.0 stable</td></tr>
+	<tr><td>Release date</td><td>27. January 2011</td></tr>
 	<tr><td>Author</td><td>Ren Fritz</td></tr>
-	<tr><td>Comment</td><td>Stanislas Rolland is the new maintainer.
-remove static markets - add Italian provinces - use TYPO3 internal language code if this exists instead of ISO code -
-</td></tr>
 </table>
 
 ## !! Attention !!
