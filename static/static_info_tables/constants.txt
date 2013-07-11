@@ -4,13 +4,13 @@ plugin.tx_staticinfotables_pi1 {.
    currencyCode = EUR
 
     # cat=plugin.tx_staticinfotables_pi1//; type=string; label= Default country: ISO alpha-3 code of the default selected country in drop-down selector.
-   countryCode = DEU
+   countryCode = 
 
     # cat=plugin.tx_staticinfotables_pi1//; type=string; label= Default country zone: Code of the default selected country zone in drop-down selector.
-   countryZoneCode = NRW
+   countryZoneCode =
 
     # cat=plugin.tx_staticinfotables_pi1//; type=string; label= Default language: ISO alpha-2 code of the default selected language in drop-down selector.
-   languageCode = DE
+   languageCode = 
 
     # cat=plugin.tx_staticinfotables_pi1//; type=string; label= Onchange attribute : Value of onchange attribute of drop-down selectors, when present.
    onChangeAttribute = javascript:this.form.submit();

@@ -28,7 +28,7 @@
  *
  * Class for handling static info tables: countries, and subdivisions, currencies, languages and taxes
  *
- * $Id: class.tx_staticinfotables_pi1.php 9462 2008-07-15 16:05:14Z franzholz $
+ * $Id: class.tx_staticinfotables_pi1.php 13881 2008-11-07 08:17:39Z franzholz $
  *
  * @author	Stanislas Rolland <stanislas.rolland(arobas)sjbr.ca>
  */
@@ -296,7 +296,7 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 			uasort($nameArray, 'strcoll');
 		}
 		if(count($nameArray) > 0)	{
-			$selector .= $this->optionsConstructor($nameArray, $selectedArray);
+			$selector .= $this->optionsConstructor($nameArray, $selectedArray); // $outSelectedArray +++ removed for PHP4 compatibility
 			$selector .= '</select>'.chr(10);
 		} else {
 			$selector = '';
@@ -501,8 +501,8 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 	function optionsConstructor($nameArray, $selectedArray=array()) {
 		global $TSFE;
 
+		$outSelectedArray = array();
 		$options = '';
-		$outSelectedArray=array();
 		foreach($nameArray as $value => $name)	{
 
 			$options  .= '<option value="'.$value.'"';
