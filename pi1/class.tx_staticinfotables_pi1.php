@@ -28,7 +28,7 @@
  *
  * Class for handling static info tables: countries, and subdivisions, currencies, languages and taxes
  *
- * $Id: class.tx_staticinfotables_pi1.php 3989 2006-10-31 08:33:07Z franzholz $
+ * $Id: class.tx_staticinfotables_pi1.php 4563 2007-01-13 04:37:36Z franzholz $
  *
  * @author	Stanislas Rolland <stanislas.rolland(arobas)fructifor.ca>
  */
@@ -255,9 +255,12 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 		$names = array();
 		$titleFields = tx_staticinfotables_div::getTCAlabelField($table, TRUE, $lang, $local);
 		$prefixedTitleFields = array();
+		$prefixedTitleFields[] = $table.'.cn_iso_3';
 		foreach ($titleFields as $titleField) {
 			$prefixedTitleFields[] = $table.'.'.$titleField;
 		}
+		
+		array_unique($prefixedTitleFields);
 		$labelFields = implode(',', $prefixedTitleFields);
 		if ($param == 'UN') {
 			$where = 'cn_uno_member=1';
@@ -271,7 +274,7 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 		$where .= ($addWhere ? ' AND '.$addWhere : '');
 
 		$res = $TYPO3_DB->exec_SELECTquery(
-			$table.'.cn_iso_3,'.$labelFields,
+			$labelFields,
 			$table,
 			$where.$TSFE->sys_page->enableFields($table)
 			);

@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "static_info_tables".
  *
- * Auto generated 11-07-2013 13:33
+ * Auto generated 11-07-2013 13:34
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'description' => 'Some database tables with usefull informations about countries, languages and currencies. Still lacks some data but the overall concept is stable. Install the extension div version 0.0.5 before you make an update!',
 	'category' => 'misc',
 	'shy' => 0,
-	'version' => '2.0.1',
+	'version' => '2.0.2',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
