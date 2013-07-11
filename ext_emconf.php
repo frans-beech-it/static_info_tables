@@ -12,10 +12,10 @@
 
 $EM_CONF[$_EXTKEY] = array (
 	'title' => 'Static Info Tables',
-	'description' => 'Some database tables with usefull informations about countries, languages and currencies.',
+	'description' => 'API and Data for countries, languages and currencies.',
 	'category' => 'misc',
 	'shy' => 0,
-	'version' => '2.1.0',
+	'version' => '2.1.1',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
