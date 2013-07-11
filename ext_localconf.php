@@ -1,9 +1,15 @@
 <?php
-if (!defined ("TYPO3_MODE")) 	die ("Access denied.");
+if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-$TYPO3_CONF_VARS['EXTCONF'][$_EXTKEY]['tables'] = array (
-	'static_countries' => array(
+$TYPO3_CONF_VARS['EXTCONF'][$_EXTKEY]['tables'] = array(
+	'static_territories' => array(
 		'label_fields' => array(	// possible label fields for different languages. Default as last.
+			'tr_name_##', 'tr_name_en',
+		),
+		'isocode_field' => 'tr_iso_##',
+	),
+	'static_countries' => array(
+		'label_fields' => array(
 			'cn_short_##', 'cn_short_en',
 		),
 		'isocode_field' => 'cn_iso_##',

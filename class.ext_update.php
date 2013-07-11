@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2005-2008 René Fritz (r.fritz@colorcube.de)
+*  (c) 2005-2006 René Fritz (r.fritz@colorcube.de)
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is
@@ -24,10 +24,10 @@
 
 
 
+require_once (t3lib_extMgm::extPath('static_info_tables').'class.tx_staticinfotables_encoding.php');
+
 /**
  * Class for updating the db
- *
- * $Id: class.ext_update.php 9462 2008-07-15 16:05:14Z franzholz $
  *
  * @author	 René Fritz <r.fritz@colorcube.de>
  */
@@ -40,55 +40,48 @@ class ext_update  {
 	 */
 	function main()	{
 
-		require_once(t3lib_extMgm::extPath(STATIC_INFO_TABLES_EXTkey).'class.tx_staticinfotables_encoding.php');
-
-		$tableArray = array ('static_countries', 'static_country_zones', 'static_languages', 'static_currencies');
+		$tables = array ('static_countries', 'static_country_zones', 'static_languages', 'static_currencies');
 
 		$content = '';
+
 		$content.= '<br />Convert character encoding of the static info tables.';
 		$content.= '<br />The default encoding is UTF-8.';
-		$destEncoding = htmlspecialchars(t3lib_div::_GP('dest_encoding'));
 
-		if(t3lib_div::_GP('convert') AND ($destEncoding != '')) {
-			foreach ($tableArray as $table) {
+		if(t3lib_div::_GP('convert') AND $destEncoding = t3lib_div::_GP('dest_encoding')) {
+			foreach ($tables as $table) {
 				$content .= '<p>'.htmlspecialchars($table.' > '.$destEncoding).'</p>';
-				tx_staticinfotables_encoding::convertEncodingTable($table, 'utf-8', $destEncoding);
+				tx_ccinfotablesmgm_div::convertEncodingTable($table, 'utf-8', $destEncoding);
 			}
-			$content .= '<p>You must enter the charset \''.$destEncoding.'\' now manually in the EM for static_info_tables!</p>';
 			$content .= '<p>Done</p>';
+
 		} else {
-			$content .= '<form name="static_info_tables_form" action="'.htmlspecialchars(t3lib_div::linkThisScript()).'" method="post">';
-			$linkScript = t3lib_div::slashJS(t3lib_div::linkThisScript());
+
+			$content .= '</form>';
+			$content .= '<form action="'.htmlspecialchars(t3lib_div::linkThisScript()).'" method="post">';
 			$content .= '<br /><br />';
-			$content .= 'This conversion works only once. When you converted the tables and you want to do it again to another encoding you have to reinstall the tables with the Extension Manager or select \'UPDATE!\'.';
+			$content .= 'This conversion works only once. When you converted the tables and you want to do it again to another encoding you have to reinstall the tables with the Extension Manager.';
 			$content .= '<br /><br />';
-			$content .= 'Destination character encoding:';
-			$content .= '<br />'.tx_staticinfotables_encoding::getEncodingSelect('dest_encoding', '', '', $TYPO3_CONF_VARS['EXTCONF'][STATIC_INFO_TABLES_EXTkey]['charset']);
+            $content .= 'Destination character encoding:';
+            $content .= '<br />'.tx_ccinfotables_encoding::getEncodingSelect('dest_encoding', '', '', 'utf-8');
 			$content .= '<br /><br />';
-			$content .= '<input type="submit" name="convert" value="Convert"  onclick="this.form.action=\''.$linkScript.'\';submit();" />';
+			$content .= '<input type="submit" name="convert" value="Convert" />';
 			$content .= '</form>';
 		}
 
 		return $content;
-
 	}
 
-	/**
-	 * access is always allowed
-	 *
-	 * @return	boolean		Always returns true
-	 */
+
 	function access() {
-		$typo3Version = class_exists('t3lib_utility_VersionNumber') ? t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) : t3lib_div::int_from_ver(TYPO3_version);
-		return ($typo3Version < 4007000);
+		return true;
 	}
 
 
 }
 
 // Include extension?
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.ext_update.php'])	{
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.ext_update.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.ext_update.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/static_info_tables/class.ext_update.php']);
 }
 
 

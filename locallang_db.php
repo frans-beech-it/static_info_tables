@@ -7,6 +7,10 @@
 
 $LOCAL_LANG = Array (
 	'default' => Array (
+		'static_territories.title' => 'Territories',
+		'static_territories_item.tr_iso_nr' => 'ISO nr territory code:',
+		'static_territories_item.tr_parent_iso_nr' => 'Parent territory code:',
+		'static_territories_item.tr_name_en' => 'Name (EN):',
 		'static_countries.title' => 'Countries',
 		'static_countries_item.cn_iso_2' => 'ISO 2 country code:',
 		'static_countries_item.cn_iso_3' => 'ISO 3 country code:',

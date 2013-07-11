@@ -1,0 +1,98 @@
+11.01.2006
+Imported from cldr
+
+Added static_territories
+
+
+Added row: static_countries.cn_iso_2 = AX
+Added row: static_countries.cn_iso_2 = HM
+Added row: static_countries.cn_iso_2 = QO
+
+NOT Imported fields
+cn_iso_3, cn_iso_nr, cn_official_name_local, cn_official_name_en, cn_capital, cn_tldomain, cn_currency_iso_3, cn_currency_iso_nr, cn_phone, cn_eu_member, cn_address_format, cn_zone_flag, cn_short_local
+
+
+Added row: static_languages.lg_iso_2 = AE
+Added row: static_languages.lg_iso_2 = AK
+Added row: static_languages.lg_iso_2 = AN
+Added row: static_languages.lg_iso_2 = AV
+Added row: static_languages.lg_iso_2 = BM
+Added row: static_languages.lg_iso_2 = CE
+Added row: static_languages.lg_iso_2 = CH
+Added row: static_languages.lg_iso_2 = CR
+Added row: static_languages.lg_iso_2 = CU
+Added row: static_languages.lg_iso_2 = CV
+Added row: static_languages.lg_iso_2 = DV
+Added row: static_languages.lg_iso_2 = EE
+Added row: static_languages.lg_iso_2 = FF
+Added row: static_languages.lg_iso_2 = HO
+Added row: static_languages.lg_iso_2 = HT
+Added row: static_languages.lg_iso_2 = HZ
+Added row: static_languages.lg_iso_2 = IG
+Added row: static_languages.lg_iso_2 = II
+Added row: static_languages.lg_iso_2 = IO
+Added row: static_languages.lg_iso_2 = JV
+Added row: static_languages.lg_iso_2 = KG
+Added row: static_languages.lg_iso_2 = KI
+Added row: static_languages.lg_iso_2 = KJ
+Added row: static_languages.lg_iso_2 = KR
+Added row: static_languages.lg_iso_2 = KV
+Added row: static_languages.lg_iso_2 = KW
+Added row: static_languages.lg_iso_2 = LB
+Added row: static_languages.lg_iso_2 = LG
+Added row: static_languages.lg_iso_2 = LI
+Added row: static_languages.lg_iso_2 = LU
+Added row: static_languages.lg_iso_2 = MH
+Added row: static_languages.lg_iso_2 = NB
+Added row: static_languages.lg_iso_2 = ND
+Added row: static_languages.lg_iso_2 = NG
+Added row: static_languages.lg_iso_2 = NN
+Added row: static_languages.lg_iso_2 = NR
+Added row: static_languages.lg_iso_2 = NV
+Added row: static_languages.lg_iso_2 = NY
+Added row: static_languages.lg_iso_2 = OJ
+Added row: static_languages.lg_iso_2 = OS
+Added row: static_languages.lg_iso_2 = PI
+Added row: static_languages.lg_iso_2 = SC
+Added row: static_languages.lg_iso_2 = SE
+Added row: static_languages.lg_iso_2 = SH
+Added row: static_languages.lg_iso_2 = TY
+Added row: static_languages.lg_iso_2 = VE
+Added row: static_languages.lg_iso_2 = WA
+Added row: static_languages.lg_iso_2 = ZA
+Removed row: static_languages.lg_iso_2 = JW
+
+
+Added row: static_currencies.cu_iso_3 = AFN
+Added row: static_currencies.cu_iso_3 = CSD
+Added row: static_currencies.cu_iso_3 = MGA
+Added row: static_currencies.cu_iso_3 = SRD
+Added row: static_currencies.cu_iso_3 = TRY
+Removed row: static_currencies.cu_iso_3 = ADP
+Removed row: static_currencies.cu_iso_3 = AFA
+Removed row: static_currencies.cu_iso_3 = BGL
+Removed row: static_currencies.cu_iso_3 = BOV
+Removed row: static_currencies.cu_iso_3 = CLF
+Removed row: static_currencies.cu_iso_3 = MGF
+Removed row: static_currencies.cu_iso_3 = MXV
+Removed row: static_currencies.cu_iso_3 = RUR
+Removed row: static_currencies.cu_iso_3 = SRG
+Removed row: static_currencies.cu_iso_3 = TPE
+Removed row: static_currencies.cu_iso_3 = TRL
+Removed row: static_currencies.cu_iso_3 = YUM
+
+NOT Imported fields
+cu_iso_nr, cu_thousands_point, cu_decimal_point, cu_sub_name_en, cu_sub_divisor, cu_sub_symbol_left, cu_sub_symbol_right, cu_sub_name_de, cu_sub_name_es, cu_sub_name_it, cu_sub_name_fr, cu_sub_name_da
+
+Fixed
+cu_thousands_point, cu_decimal_point for GBP, USD
+
+
+static_country_zones
+
+Fixed
+113  CH  CHE  756  GR  Graubünden
+146  ES  ESP  724  Cantabria  Cantabria
+
+Added zones for GB, IE, BR
+

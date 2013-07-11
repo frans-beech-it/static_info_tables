@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2004-2005 René Fritz (r.fritz@colorcube.de)
+*  (c) 2004-2006 RenÃ© Fritz (r.fritz@colorcube.de)
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is
@@ -24,7 +24,7 @@
 /**
  * Misc functions to access the static info tables
  *
- * @author	René Fritz <r.fritz@colorcube.de>
+ * @author	RenÃ© Fritz <r.fritz@colorcube.de>
  * @package TYPO3
  */
 /**
@@ -50,7 +50,7 @@
 /**
  * Misc functions to access the static info tables
  *
- * @author	René Fritz <r.fritz@colorcube.de>
+ * @author	RenÃ© Fritz <r.fritz@colorcube.de>
  * @package TYPO3
  */
 class tx_staticinfotables_div {
@@ -149,61 +149,20 @@ class tx_staticinfotables_div {
 	 * @return	string		'DE', 'EN', 'DK', ...
 	 */
 	function getCurrentLanguage() {
-		global $LANG, $TSFE, $BE_USER;
-
-			// TYPO3 specific: Array with the iso names used for each system language in TYPO3:
-		$typo2iso = array(
-			'default' => 'EN',
-			'ar' => 'AR',
-			'eu' => 'EU',
-			'bg' => 'BG',
-			'ca' => 'CA',
-			'ch' => 'ZA',
-			'hk' => 'ZH',
-			'hr' => 'HR',
-			'cz' => 'CS',
-			'dk' => 'DA',
-			'nl' => 'NL',
-			'et' => 'ET',
-			'fi' => 'FI',
-			'fr' => 'FR',
-			'de' => 'DE',
-			'gr' => 'EL',
-			'gl' => 'KL',
-			'he' => 'HE',
-			'hu' => 'HU',
-			'is' => 'IS',
-			'it' => 'IT',
-			'jp' => 'JA',
-			'kr' => 'KO',
-			'lv' => 'LV',
-			'lt' => 'LT',
-			'no' => 'NO',
-			'pl' => 'PL',
-			'pt' => 'PT',
-			'ro' => 'RO',
-			'ru' => 'RU',
-			'ba' => 'BS',
-			'sk' => 'SK',
-			'si' => 'SL',
-			'es' => 'ES',
-			'se' => 'SV',
-			'th' => 'TH',
-			'tr' => 'TR',
-			'ua' => 'UK',
-			'vn' => 'VI',
-		);
-
-
-		// what about that? different than $LANG? I think not.  $langCode = strtolower($GLOBALS['BE_USER']->user['lang']);
-
+		global $LANG, $TSFE;
 
 		if (is_object($LANG)) {
 			$langCodeT3 = $LANG->lang;
 		} elseif (is_object($TSFE)) {
 			$langCodeT3 = $TSFE->lang;
+		} else {
+			return 'EN';
 		}
-		$lang = $typo2iso[$langCodeT3];
+
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('lg_iso_2', 'static_languages', 'lg_typo3='.$GLOBALS['TYPO3_DB']->fullQuoteStr($langCodeT3,'static_languages'));
+		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			$lang = $row['lg_iso_2'];
+		}
 
 		return $lang ? $lang : strtoupper($langCodeT3);
 	}
@@ -232,7 +191,7 @@ class tx_staticinfotables_div {
 			$enableFields = t3lib_BEfunc::deleteClause($table);
 		}
 
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, $table.'.'.$isoCodeField.'="'.$GLOBALS['TYPO3_DB']->quoteStr($isoCode,$table).'"'.$enableFields);
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, $table.'.'.$isoCodeField.'='.$GLOBALS['TYPO3_DB']->fullQuoteStr($isoCode,$table).$enableFields);
 		if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))	{
 			$title = $row[$titleField];
 		}
@@ -285,7 +244,7 @@ class tx_staticinfotables_div {
 						$table,
 						'tx_staticinfotables_hotlist',
 						'',	// $foreign_table
-						'AND tx_staticinfotables_hotlist.application="'.$GLOBALS['TYPO3_DB']->quoteStr($app,'tx_staticinfotables_hotlist').'"',
+						'AND tx_staticinfotables_hotlist.application='.$GLOBALS['TYPO3_DB']->fullQuoteStr($app,'tx_staticinfotables_hotlist'),
 						'',
 						'tx_staticinfotables_hotlist.sorting DESC',	// $orderBy
 						$limit
@@ -355,7 +314,7 @@ class tx_staticinfotables_div {
 				$fields[$indexField] = $indexField;
 				$fields['uid'] = 'uid';
 
-				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(implode(',',$fields), $table, $indexField.'="'.$GLOBALS['TYPO3_DB']->quoteStr($indexValue,$table).'"'.t3lib_BEfunc::deleteClause($table));
+				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(implode(',',$fields), $table, $indexField.'='.$GLOBALS['TYPO3_DB']->fullQuoteStr($indexValue,$table).t3lib_BEfunc::deleteClause($table));
 				if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))	{
 					$uid = $row['uid'];
 				}
@@ -363,12 +322,12 @@ class tx_staticinfotables_div {
 
 			if ($uid) {
 					// update record from hotlist table
-				$newRow = array ('sorting' => 'sorting+1');
+				$newRow = array('sorting' => 'sorting+1');
 //				$res = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
 //						'tx_staticinfotables_hotlist',
 //						'uid_local='.$uid.
-//							' AND application="'.$GLOBALS['TYPO3_DB']->quoteStr($app,'tx_staticinfotables_hotlist').'"'.
-//							' AND tablenames="'.$GLOBALS['TYPO3_DB']->quoteStr($table,'tx_staticinfotables_hotlist').'"'.
+//							' AND application='.$GLOBALS['TYPO3_DB']->fullQuoteStr($app,'tx_staticinfotables_hotlist').
+//							' AND tablenames='.$GLOBALS['TYPO3_DB']->fullQuoteStr($table,'tx_staticinfotables_hotlist').
 //							t3lib_BEfunc::deleteClause('tx_staticinfotables_hotlist'),
 //						$newRow
 //					);
@@ -378,14 +337,14 @@ class tx_staticinfotables_div {
 				$GLOBALS['TYPO3_DB']->sql_query(str_replace('"sorting+1"', 'sorting+1', $GLOBALS['TYPO3_DB']->UPDATEquery(
 						'tx_staticinfotables_hotlist',
 						'uid_local='.$uid.
-							' AND application="'.$GLOBALS['TYPO3_DB']->quoteStr($app,'tx_staticinfotables_hotlist').'"'.
-							' AND tablenames="'.$GLOBALS['TYPO3_DB']->quoteStr($table,'tx_staticinfotables_hotlist').'"'.
+							' AND application='.$GLOBALS['TYPO3_DB']->fullQuoteStr($app,'tx_staticinfotables_hotlist').
+							' AND tablenames='.$GLOBALS['TYPO3_DB']->fullQuoteStr($table,'tx_staticinfotables_hotlist').
 							t3lib_BEfunc::deleteClause('tx_staticinfotables_hotlist'),
 						$newRow)));
 
 				if (!$GLOBALS['TYPO3_DB']->sql_affected_rows())	{
 						// insert new hotlist entry
-					$row = array (
+					$row = array(
 						'uid_local' => $uid,
 						'tablenames' => $table,
 						'application' => $app,

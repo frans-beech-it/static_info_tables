@@ -2,8 +2,26 @@
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 
-$TCA['static_countries'] = array (
-	'ctrl' => array (
+$TCA['static_territories'] = array(
+	'ctrl' => array(
+		'label' => 'tr_name_en',
+		'label_alt' => 'tr_name_en,tr_iso_nr',
+		'readOnly' => 1,	// This should always be true, as it prevents the static data from being altered
+		'adminOnly' => 1,
+		'rootLevel' => 1,
+		'is_static' => 1,
+		'default_sortby' => 'ORDER BY tr_name_en',
+		'title' => 'LLL:EXT:'.$_EXTKEY.'/locallang_db.php:static_territories.title',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_territories.gif',
+	),
+	'interface' => array(
+		'showRecordFieldList' => 'tr_name_en,tr_iso_nr'
+	)
+);
+
+$TCA['static_countries'] = array(
+	'ctrl' => array(
 		'label' => 'cn_short_en',
 		'label_alt' => 'cn_short_en,cn_iso_2',
 		'readOnly' => 1,	// This should always be true, as it prevents the static data from being altered
@@ -15,14 +33,14 @@ $TCA['static_countries'] = array (
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_countries.gif',
 	),
-	'interface' => array (
-		'showRecordFieldList' => 'cn_iso_2,cn_iso_3,cn_iso_nr,cn_official_name_local,cn_official_name_en,cn_capital,cn_tldomain,cn_currency_iso_3,cn_currency_iso_nr,cn_phone,cn_eu_member,cn_address_format,cn_short_en,cn_short_dk,cn_short_de'
+	'interface' => array(
+		'showRecordFieldList' => 'cn_iso_2,cn_iso_3,cn_iso_nr,cn_official_name_local,cn_official_name_en,cn_capital,cn_tldomain,cn_currency_iso_3,cn_currency_iso_nr,cn_phone,cn_eu_member,cn_address_format,cn_short_en'
 	)
 );
 
 
-$TCA['static_country_zones'] = array (
-	'ctrl' => array (
+$TCA['static_country_zones'] = array(
+	'ctrl' => array(
 		'label' => 'zn_name_local',
 		'label_alt' => 'zn_name_local,zn_code',
 		'readOnly' => 1,
@@ -34,14 +52,14 @@ $TCA['static_country_zones'] = array (
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_countries.gif',
 	),
-	'interface' => array (
+	'interface' => array(
 		'showRecordFieldList' => 'zn_country_iso_nr,zn_country_iso_3,zn_code,zn_name_local'
 	)
 );
 
 
-$TCA['static_languages'] = array (
-	'ctrl' => array (
+$TCA['static_languages'] = array(
+	'ctrl' => array(
 		'label' => 'lg_name_en',
 		'label_alt' => 'lg_name_en,lg_iso_2',
 		'readOnly' => 1,
@@ -53,14 +71,14 @@ $TCA['static_languages'] = array (
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_languages.gif',
 	),
-	'interface' => array (
-		'showRecordFieldList' => 'lg_name_en,lg_iso_2,lg_typo3,lg_name_fr,lg_name_de,lg_name_es,lg_name_nl'
+	'interface' => array(
+		'showRecordFieldList' => 'lg_name_en,lg_iso_2,lg_typo3'
 	)
 );
 
 
-$TCA['static_currencies'] = array (
-	'ctrl' => array (
+$TCA['static_currencies'] = array(
+	'ctrl' => array(
 		'label' => 'cu_name_en',
 		'label_alt' => 'cu_name_en,cu_iso_3',
 		'readOnly' => 1,
@@ -72,8 +90,8 @@ $TCA['static_currencies'] = array (
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_static_currencies.gif',
 	),
-	'interface' => array (
-		'showRecordFieldList' => 'cu_iso_3,cu_iso_nr,cu_name_en,cu_name_de,cu_symbol_left,cu_symbol_right,cu_thousands_point,cu_decimal_point,cu_decimal_digits,cu_sub_name_en,cu_sub_name_de,cu_sub_divisor,cu_sub_symbol_left,cu_sub_symbol_right'
+	'interface' => array(
+		'showRecordFieldList' => 'cu_iso_3,cu_iso_nr,cu_name_en,cu_symbol_left,cu_symbol_right,cu_thousands_point,cu_decimal_point,cu_decimal_digits,cu_sub_name_en,cu_sub_divisor,cu_sub_symbol_left,cu_sub_symbol_right'
 	)
 );
 
@@ -84,8 +102,19 @@ $TCA['static_currencies'] = array (
 //$TCA['cc_static_currencies']['ctrl']['readOnly'] = 0;
 
 
+// Unfortunately this do not work because the user will be initialized afterwards
 
-
+//$TCA['static_territories']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_territories', false);
+//$TCA['static_territories']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_territories', false);
+//
+//$TCA['static_countries']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_countries', false);
+//$TCA['static_countries']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_countries', false);
+//
+//$TCA['static_languages']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_languages', false);
+//$TCA['static_languages']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_languages', false);
+//
+//$TCA['static_currencies']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_currencies');
+//$TCA['static_currencies']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_currencies', false);
 
 
 // ******************************************************************
@@ -93,15 +122,15 @@ $TCA['static_currencies'] = array (
 // ******************************************************************
 
 t3lib_div::loadTCA('sys_language');
-$TCA['sys_language']['columns']['static_lang_isocode']['config'] = array (
+$TCA['sys_language']['columns']['static_lang_isocode']['config'] = array(
 			'type' => 'select',
-			'items' => Array (
-				Array('',0),
+			'items' => array(
+				array('',0),
 			),
 			#'foreign_table' => 'static_languages',
 			#'foreign_table_where' => 'AND static_languages.pid=0 ORDER BY static_languages.lg_name_en',
 			'itemsProcFunc' => 'tx_staticinfotables_div->selectItemsTCA',
-			'itemsProcFunc_config' => array (
+			'itemsProcFunc_config' => array(
 				'table' => 'static_languages',
 				'indexField' => 'uid',
 				// I think that will make more sense in the future

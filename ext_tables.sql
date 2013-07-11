@@ -1,4 +1,17 @@
 #
+# Table structure for table "static_territories"
+#
+CREATE TABLE static_territories (
+  uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
+  pid int(11) unsigned DEFAULT '0' NOT NULL,
+  tr_iso_nr int(11) unsigned DEFAULT '0' NOT NULL,
+  tr_parent_iso_nr int(11) unsigned DEFAULT '0' NOT NULL,
+  tr_name_en varchar(50) DEFAULT '0' NOT NULL,
+  PRIMARY KEY (uid),
+  UNIQUE uid (uid)
+);
+
+#
 # Table structure for table "static_countries"
 #
 CREATE TABLE static_countries (
@@ -7,9 +20,10 @@ CREATE TABLE static_countries (
   cn_iso_2 char(2) DEFAULT '' NOT NULL,
   cn_iso_3 char(3) DEFAULT '' NOT NULL,
   cn_iso_nr int(11) unsigned DEFAULT '0' NOT NULL,
-  cn_official_name_local varchar(45) DEFAULT '' NOT NULL,
-  cn_official_name_en varchar(45) DEFAULT '' NOT NULL,
-  cn_capital varchar(45) DEFAULT '' NOT NULL,
+  cn_parent_tr_iso_nr int(11) unsigned DEFAULT '0' NOT NULL,
+  cn_official_name_local varchar(60) DEFAULT '' NOT NULL,
+  cn_official_name_en varchar(50) DEFAULT '' NOT NULL,
+  cn_capital varchar(30) DEFAULT '' NOT NULL,
   cn_tldomain char(2) DEFAULT '' NOT NULL,
   cn_currency_iso_3 char(3) DEFAULT '' NOT NULL,
   cn_currency_iso_nr int(10) unsigned DEFAULT '0' NOT NULL,
@@ -17,10 +31,8 @@ CREATE TABLE static_countries (
   cn_eu_member tinyint(3) unsigned DEFAULT '0' NOT NULL,
   cn_address_format tinyint(3) unsigned DEFAULT '0' NOT NULL,
   cn_zone_flag tinyint(4) DEFAULT '0' NOT NULL,
-  cn_short_local varchar(45) DEFAULT '' NOT NULL,
-  cn_short_en varchar(45) DEFAULT '' NOT NULL,
-  cn_short_dk varchar(45) DEFAULT '' NOT NULL,
-  cn_short_de varchar(45) DEFAULT '' NOT NULL,
+  cn_short_local varchar(50) DEFAULT '' NOT NULL,
+  cn_short_en varchar(50) DEFAULT '' NOT NULL,
   PRIMARY KEY (uid),
   UNIQUE uid (uid)
 );
@@ -35,7 +47,7 @@ CREATE TABLE static_country_zones (
   zn_country_iso_2 char(2) DEFAULT '' NOT NULL,
   zn_country_iso_3 char(3) DEFAULT '' NOT NULL,
   zn_country_iso_nr int(11) unsigned DEFAULT '0' NOT NULL,
-  zn_code varchar(45) DEFAULT '' NOT NULL,
+  zn_code varchar(15) DEFAULT '' NOT NULL,
   zn_name_local varchar(45) DEFAULT '' NOT NULL,
   PRIMARY KEY (uid),
   UNIQUE uid (uid)
@@ -56,12 +68,10 @@ CREATE TABLE static_currencies (
   cu_thousands_point char(1) DEFAULT '' NOT NULL,
   cu_decimal_point char(1) DEFAULT '' NOT NULL,
   cu_decimal_digits tinyint(3) unsigned DEFAULT '0' NOT NULL,
-  cu_sub_name_en varchar(20) DEFAULT '' NOT NULL,
+  cu_sub_name_en varchar(12) DEFAULT '' NOT NULL,
   cu_sub_divisor int(11) DEFAULT '1' NOT NULL,
   cu_sub_symbol_left varchar(12) DEFAULT '' NOT NULL,
   cu_sub_symbol_right varchar(12) DEFAULT '' NOT NULL,
-  cu_name_de varchar(40) DEFAULT '' NOT NULL,
-  cu_sub_name_de varchar(20) DEFAULT '' NOT NULL,
   PRIMARY KEY (uid),
   UNIQUE uid (uid),
   KEY parent (pid)
@@ -75,12 +85,8 @@ CREATE TABLE static_languages (
   uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
   pid int(11) unsigned DEFAULT '0' NOT NULL,
   lg_iso_2 char(2) DEFAULT '' NOT NULL,
-  lg_name_en varchar(40) DEFAULT '0' NOT NULL,
+  lg_name_en varchar(35) DEFAULT '0' NOT NULL,
   lg_typo3 char(2) DEFAULT '' NOT NULL,
-  lg_name_fr varchar(40) DEFAULT '0' NOT NULL,
-  lg_name_de varchar(40) DEFAULT '0' NOT NULL,
-  lg_name_es varchar(40) DEFAULT '0' NOT NULL,
-  lg_name_nl varchar(40) DEFAULT '0' NOT NULL,
   PRIMARY KEY (uid),
   UNIQUE uid (uid),
   KEY parent (pid)

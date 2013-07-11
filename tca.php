@@ -1,41 +1,17 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
+$TCA['static_territories'] = array(
+	'ctrl' => $TCA['static_territories']['ctrl'],
 
-
-$TCA['static_countries'] = Array (
-	'ctrl' => $TCA['static_countries']['ctrl'],
-
-	'interface' => Array (
-		'showRecordFieldList' => 'cn_iso_2,cn_iso_3,cn_iso_nr,cn_official_name_local,cn_official_name_en,cn_capital,cn_tldomain,cn_currency_iso_3,cn_currency_iso_nr,cn_phone,cn_eu_member,cn_address_format,cn_short_en,cn_short_dk,cn_short_de'
+	'interface' => array(
+		'showRecordFieldList' => 'tr_iso_nr,tr_parent_iso_nr,tr_name_en'
 	),
-	'columns' => Array (
-		'cn_iso_2' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_iso_2',
+	'columns' => array(
+		'tr_iso_nr' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_territories_item.tr_iso_nr',
 			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '4',
-				'max' => '2',
-				'eval' => '',
-				'default' => ''
-			)
-		),
-		'cn_iso_3' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_iso_3',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '5',
-				'max' => '3',
-				'eval' => '',
-				'default' => ''
-			)
-		),
-		'cn_iso_nr' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_iso_nr',
-			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '7',
 				'max' => '7',
@@ -43,54 +19,59 @@ $TCA['static_countries'] = Array (
 				'default' => '0'
 			)
 		),
-		'cn_official_name_local' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_official_name_local',
+		'tr_parent_iso_nr' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_territories_item.tr_parent_iso_nr',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
-				'size' => '25',
-				'max' => '45',
-				'eval' => 'trim',
-				'default' => ''
+				'size' => '7',
+				'max' => '7',
+				'eval' => 'int',
+				'default' => '0'
 			)
 		),
-		'cn_official_name_en' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_official_name_en',
+		'tr_name_en' => array(
+			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.name',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
-				'size' => '25',
+				'size' => '18',
 				'max' => '45',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
-		),
-		'cn_capital' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_capital',
+		)
+	),
+	'types' => array(
+		'1' => array(
+			'showitem' => 'tr_iso_nr,tr_name_en,tr_parent_iso_nr'
+		)
+	),
+);
+
+$TCA['static_countries'] = array(
+	'ctrl' => $TCA['static_countries']['ctrl'],
+
+	'interface' => array(
+		'showRecordFieldList' => 'cn_iso_2,cn_iso_3,cn_iso_nr,cn_official_name_local,cn_official_name_en,cn_capital,cn_tldomain,cn_currency_iso_3,cn_currency_iso_nr,cn_phone,cn_eu_member,cn_address_format,cn_short_en'
+	),
+	'columns' => array(
+		'cn_iso_2' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_iso_2',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
-				'size' => '15',
-				'max' => '45',
-				'eval' => 'trim',
-				'default' => ''
-			)
-		),
-		'cn_tldomain' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_tldomain',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '5',
-				'max' => '',
+				'size' => '4',
+				'max' => '2',
 				'eval' => '',
 				'default' => ''
 			)
 		),
-		'cn_currency_iso_nr' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_currency_iso_nr',
+		'cn_iso_3' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_iso_3',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '5',
 				'max' => '3',
@@ -98,10 +79,90 @@ $TCA['static_countries'] = Array (
 				'default' => ''
 			)
 		),
-		'cn_currency_iso_3' => Array (
+		'cn_iso_nr' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_iso_nr',
+			'exclude' => '0',
+			'config' => array(
+				'type' => 'input',
+				'size' => '7',
+				'max' => '7',
+				'eval' => 'int',
+				'default' => '0'
+			)
+		),
+		'cn_parent_tr_iso_nr' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_territories_item.tr_parent_iso_nr',
+			'exclude' => '0',
+			'config' => array(
+				'type' => 'input',
+				'size' => '7',
+				'max' => '7',
+				'eval' => 'int',
+				'default' => '0'
+			)
+		),
+		'cn_official_name_local' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_official_name_local',
+			'exclude' => '0',
+			'config' => array(
+				'type' => 'input',
+				'size' => '25',
+				'max' => '45',
+				'eval' => 'trim',
+				'default' => '',
+				'_is_string' => '1'
+			)
+		),
+		'cn_official_name_en' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_official_name_en',
+			'exclude' => '0',
+			'config' => array(
+				'type' => 'input',
+				'size' => '25',
+				'max' => '45',
+				'eval' => 'trim',
+				'default' => '',
+				'_is_string' => '1'
+			)
+		),
+		'cn_capital' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_capital',
+			'exclude' => '0',
+			'config' => array(
+				'type' => 'input',
+				'size' => '15',
+				'max' => '45',
+				'eval' => 'trim',
+				'default' => '',
+				'_is_string' => '1'
+			)
+		),
+		'cn_tldomain' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_tldomain',
+			'exclude' => '0',
+			'config' => array(
+				'type' => 'input',
+				'size' => '5',
+				'max' => '',
+				'eval' => '',
+				'default' => ''
+			)
+		),
+		'cn_currency_iso_nr' => array(
+			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_currency_iso_nr',
+			'exclude' => '0',
+			'config' => array(
+				'type' => 'input',
+				'size' => '5',
+				'max' => '3',
+				'eval' => '',
+				'default' => ''
+			)
+		),
+		'cn_currency_iso_3' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_currency_iso_3',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '7',
 				'max' => '7',
@@ -109,10 +170,10 @@ $TCA['static_countries'] = Array (
 				'default' => '0'
 			)
 		),
-		'cn_phone' => Array (
+		'cn_phone' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_phone',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '10',
 				'max' => '20',
@@ -120,102 +181,82 @@ $TCA['static_countries'] = Array (
 				'default' => '0'
 			)
 		),
-		'cn_eu_member' => Array (
+		'cn_eu_member' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_eu_member',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'check',
 				'default' => '0'
 			)
 		),
-		'cn_address_format' => Array (
+		'cn_address_format' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'select',
-				'items' => Array (
-				Array('','0'),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_1','1'),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_2','2'),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_3','3'),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_4','4'),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_5','5'),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_6','6'),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_7','7'),
-				Array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_8','8'),
+				'items' => array(
+				array('','0'),
+				array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_1','1'),
+				array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_2','2'),
+				array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_3','3'),
+				array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_4','4'),
+				array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_5','5'),
+				array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_6','6'),
+				array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_7','7'),
+				array('LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_address_format_8','8'),
 				),
 				'default' => '0'
 			)
 		),
-		'cn_zone_flag' => Array (
+		'cn_zone_flag' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_zone_flag',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'check',
 				'default' => '0'
 			)
 		),
-		'cn_short_local' => Array (
+		'cn_short_local' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_short_local',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '25',
 				'max' => '45',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		),
-		'cn_short_en' => Array (
+		'cn_short_en' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_short_en',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '25',
 				'max' => '45',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		),
-		'cn_short_dk' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_short_dk',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '25',
-				'max' => '45',
-				'eval' => 'trim',
-				'default' => ''
-			)
-		),
-		'cn_short_de' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_countries_item.cn_short_de',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '25',
-				'max' => '45',
-				'eval' => 'trim',
-				'default' => ''
-			)
+	),
+	'types' => array(
+		'1' => array(
+			'showitem' => 'cn_short_local,cn_official_name_local,cn_official_name_en,--palette--;;1;;,--palette--;;2;;,--palette--;;3;;,--palette--;;4;;,cn_short_en'
 		)
 	),
-	'types' => Array (
-		'1' => Array (
-			'showitem' => 'cn_short_local,cn_official_name_local,cn_official_name_en,--palette--;;1;;,--palette--;;2;;,--palette--;;3;;,--palette--;;4;;,cn_short_en,cn_short_dk,cn_short_de'
-		)
-	),
-	'palettes'	=> Array (
-		'1' => Array(
-			'showitem' => 'cn_iso_nr,cn_iso_2,cn_iso_3', 'canNotCollapse' => '1'
+	'palettes'	=> array(
+		'1' => array(
+			'showitem' => 'cn_iso_nr,cn_iso_2,cn_iso_3,cn_parent_tr_iso_nr', 'canNotCollapse' => '1'
 		),
-		'2' => Array(
+		'2' => array(
 			'showitem' => 'cn_currency_iso_nr,cn_currency_iso_3', 'canNotCollapse' => '1'
 		),
-		'3' => Array(
+		'3' => array(
 			'showitem' => 'cn_capital,cn_eu_member,cn_phone,cn_tldomain', 'canNotCollapse' => '1'
 		),
-		'4' => Array(
+		'4' => array(
 			'showitem' => 'cn_address_format,cn_zone_flag', 'canNotCollapse' => '1'
 		)
 	)
@@ -223,17 +264,17 @@ $TCA['static_countries'] = Array (
 
 
 
-$TCA['static_currencies'] = Array (
+$TCA['static_currencies'] = array(
 	'ctrl' => $TCA['static_currencies']['ctrl'],
 
-	'interface' => Array (
+	'interface' => array(
 		'showRecordFieldList' => 'cu_iso_3,cu_iso_nr,cu_name_en,cu_symbol_left,cu_symbol_right,cu_thousands_point,cu_decimal_point,cu_decimal_digits,cu_sub_name_en,cu_sub_divisor,cu_sub_symbol_left,cu_sub_symbol_right'
 	),
-	'columns' => Array (
-		'cu_iso_3' => Array (
+	'columns' => array(
+		'cu_iso_3' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_iso_3',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '5',
 				'max' => '3',
@@ -241,10 +282,10 @@ $TCA['static_currencies'] = Array (
 				'default' => ''
 			)
 		),
-		'cu_iso_nr' => Array (
+		'cu_iso_nr' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_iso_nr',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '7',
 				'max' => '3',
@@ -252,76 +293,58 @@ $TCA['static_currencies'] = Array (
 				'default' => '0'
 			)
 		),
-		'cu_name_en' => Array (
+		'cu_name_en' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_name_en',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '18',
 				'max' => '40',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		),
-		'cu_sub_name_en' => Array (
+		'cu_sub_name_en' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_sub_name_en',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '18',
 				'max' => '20',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		),
-		'cu_name_de' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_name_de',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '18',
-				'max' => '40',
-				'eval' => 'trim',
-				'default' => ''
-			)
-		),
-		'cu_sub_name_de' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_sub_name_de',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '18',
-				'max' => '20',
-				'eval' => 'trim',
-				'default' => ''
-			)
-		),
-		'cu_symbol_left' => Array (
+		'cu_symbol_left' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_symbol_left',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '8',
 				'max' => '12',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		),
-		'cu_symbol_right' => Array (
+		'cu_symbol_right' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_symbol_right',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '8',
 				'max' => '12',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		),
-		'cu_thousands_point' => Array (
+		'cu_thousands_point' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_thousands_point',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '3',
 				'max' => '1',
@@ -329,10 +352,10 @@ $TCA['static_currencies'] = Array (
 				'default' => ''
 			)
 		),
-		'cu_decimal_point' => Array (
+		'cu_decimal_point' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_decimal_point',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '3',
 				'max' => '1',
@@ -340,10 +363,10 @@ $TCA['static_currencies'] = Array (
 				'default' => ''
 			)
 		),
-		'cu_decimal_digits' => Array (
+		'cu_decimal_digits' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_decimal_digits',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '5',
 				'max' => '',
@@ -351,10 +374,10 @@ $TCA['static_currencies'] = Array (
 				'default' => ''
 			)
 		),
-		'cu_sub_divisor' => Array (
+		'cu_sub_divisor' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_sub_divisor',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '8',
 				'max' => '20',
@@ -362,42 +385,44 @@ $TCA['static_currencies'] = Array (
 				'default' => '1'
 			)
 		),
-		'cu_sub_symbol_left' => Array (
+		'cu_sub_symbol_left' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_sub_symbol_left',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '8',
 				'max' => '12',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		),
-		'cu_sub_symbol_right' => Array (
+		'cu_sub_symbol_right' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_currencies_item.cu_sub_symbol_right',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '8',
 				'max' => '12',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		)
 	),
-	'types' => Array (
-		'1' => Array (
-			'showitem' => 'cu_name_en,cu_name_de,--palette--;;1;;,--palette--;;2;;,cu_sub_name_en,cu_sub_name_de,--palette--;;3;;'
+	'types' => array(
+		'1' => array(
+			'showitem' => 'cu_name_en,--palette--;;1;;,--palette--;;2;;,cu_sub_name_en,--palette--;;3;;'
 		)
 	),
-	'palettes'	=> Array (
-		'1' => Array(
+	'palettes'	=> array(
+		'1' => array(
 			'showitem' => 'cu_iso_nr,cu_iso_3', 'canNotCollapse' => '1'
 		),
-		'2' => Array(
+		'2' => array(
 			'showitem' => 'cu_symbol_left,cu_symbol_right,cu_thousands_point,cu_decimal_point', 'canNotCollapse' => '1'
 		),
-		'3' => Array(
+		'3' => array(
 			'showitem' => 'cu_sub_symbol_left,cu_sub_symbol_right,cu_decimal_digits,cu_sub_divisor', 'canNotCollapse' => '1'
 		)
 	)
@@ -405,17 +430,17 @@ $TCA['static_currencies'] = Array (
 
 
 
-$TCA['static_languages'] = Array (
+$TCA['static_languages'] = array(
 	'ctrl' => $TCA['static_languages']['ctrl'],
 
-	'interface' => Array (
-		'showRecordFieldList' => 'lg_name_en,lg_iso_2,lg_typo3,lg_name_fr,lg_name_de,lg_name_es,lg_name_nl'
+	'interface' => array(
+		'showRecordFieldList' => 'lg_name_en,lg_iso_2,lg_typo3'
 	),
-	'columns' => Array (
-		'lg_iso_2' => Array (
+	'columns' => array(
+		'lg_iso_2' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_iso_2',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '4',
 				'max' => '2',
@@ -423,65 +448,22 @@ $TCA['static_languages'] = Array (
 				'default' => ''
 			)
 		),
-		'lg_name_en' => Array (
+		'lg_name_en' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_name_en',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '18',
 				'max' => '40',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		),
-		'lg_name_fr' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_name_fr',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '18',
-				'max' => '40',
-				'eval' => 'trim',
-				'default' => ''
-			)
-		),
-		'lg_name_de' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_name_de',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '18',
-				'max' => '40',
-				'eval' => 'trim',
-				'default' => ''
-			)
-		),
-		'lg_name_es' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_name_es',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '18',
-				'max' => '40',
-				'eval' => 'trim',
-				'default' => ''
-			)
-		),
-		'lg_name_nl' => Array (
-			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_name_nl',
-			'exclude' => '0',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '18',
-				'max' => '40',
-				'eval' => 'trim',
-				'default' => ''
-			)
-		),
-		'lg_typo3' => Array (
+		'lg_typo3' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_languages_item.lg_typo3',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '3',
 				'max' => '2',
@@ -490,9 +472,9 @@ $TCA['static_languages'] = Array (
 			)
 		),
 	),
-	'types' => Array (
-		'1' => Array (
-			'showitem' => 'lg_name_en,lg_iso_2,lg_typo3,lg_name_fr,lg_name_de,lg_name_es,lg_name_nl'
+	'types' => array(
+		'1' => array(
+			'showitem' => 'lg_name_en,lg_iso_2,lg_typo3'
 		)
 	)
 );
@@ -500,17 +482,17 @@ $TCA['static_languages'] = Array (
 
 
 
-$TCA['static_country_zones'] = Array (
+$TCA['static_country_zones'] = array(
 	'ctrl' => $TCA['static_country_zones']['ctrl'],
 
-	'interface' => Array (
+	'interface' => array(
 		'showRecordFieldList' => 'zn_country_iso_nr,zn_country_iso_2,zn_country_iso_3,zn_code,zn_name_local'
 	),
-	'columns' => Array (
-		'zn_country_iso_nr' => Array (
+	'columns' => array(
+		'zn_country_iso_nr' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_country_zones_item.zn_country_iso_nr',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '5',
 				'max' => '20',
@@ -518,10 +500,10 @@ $TCA['static_country_zones'] = Array (
 				'default' => '0'
 			)
 		),
-		'zn_country_iso_2' => Array (
+		'zn_country_iso_2' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_country_zones_item.zn_country_iso_2',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '3',
 				'max' => '2',
@@ -529,10 +511,10 @@ $TCA['static_country_zones'] = Array (
 				'default' => ''
 			)
 		),
-		'zn_country_iso_3' => Array (
+		'zn_country_iso_3' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_country_zones_item.zn_country_iso_3',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '5',
 				'max' => '3',
@@ -540,50 +522,43 @@ $TCA['static_country_zones'] = Array (
 				'default' => ''
 			)
 		),
-		'zn_code' => Array (
+		'zn_code' => array(
 			'label' => 'LLL:EXT:static_info_tables/locallang_db.php:static_country_zones_item.zn_code',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '18',
 				'max' => '45',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		),
-		'zn_name_local' => Array (
+		'zn_name_local' => array(
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.name',
 			'exclude' => '0',
-			'config' => Array (
+			'config' => array(
 				'type' => 'input',
 				'size' => '18',
 				'max' => '45',
 				'eval' => 'trim',
-				'default' => ''
+				'default' => '',
+				'_is_string' => '1'
 			)
 		)
 	),
-	'types' => Array (
-		'1' => Array (
+	'types' => array(
+		'1' => array(
 			'showitem' => 'zn_name_local,zn_code,--palette--;;1;;'
 		)
 	),
-	'palettes'	=> Array (
-		'1' => Array(
+	'palettes'	=> array(
+		'1' => array(
 			'showitem' => 'zn_country_iso_nr,zn_country_iso_2,zn_country_iso_3', 'canNotCollapse' => '1'
 		)
 	)
 );
 
-
-$TCA['static_countries']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_countries', false);
-$TCA['static_countries']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_countries', false);
-
-$TCA['static_languages']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_languages', false);
-$TCA['static_languages']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_languages', false);
-
-$TCA['static_currencies']['ctrl']['label'] = tx_staticinfotables_div::getTCAlabelField('static_currencies');
-$TCA['static_currencies']['ctrl']['default_sortby'] = 'ORDER BY '.tx_staticinfotables_div::getTCAsortField('static_currencies', false);
 
 
 ?>

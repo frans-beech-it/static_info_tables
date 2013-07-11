@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2004-2005 René Fritz (r.fritz@colorcube.de)
+*  (c) 2004-2005 RenÃ© Fritz (r.fritz@colorcube.de)
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is
@@ -24,7 +24,7 @@
 /**
  * example for using the hotlist functionality with the sys_language table
  *
- * @author	René Fritz <r.fritz@colorcube.de>
+ * @author	RenÃ© Fritz <r.fritz@colorcube.de>
  * @package TYPO3
  */
 
@@ -33,7 +33,7 @@
 /**
  * example for using the hotlist functionality with the sys_language table
  *
- * @author	René Fritz <r.fritz@colorcube.de>
+ * @author	RenÃ© Fritz <r.fritz@colorcube.de>
  * @package TYPO3
  */
 class tx_staticinfotables_syslanguage {
