@@ -24,7 +24,7 @@
 /**
  * Misc functions to access the static info tables
  *
- * $Id: class.tx_staticinfotables_div.php 13881 2008-11-07 08:17:39Z franzholz $
+ * $Id: class.tx_staticinfotables_div.php 13886 2008-11-07 10:57:37Z franzholz $
  *
  * @author	René Fritz <r.fritz@colorcube.de>
  * @package TYPO3
@@ -43,12 +43,12 @@
  *  212:     function getCurrentSystemLanguage($where='')
  *  245:     function getCollateLocale()
  *  278:     function getTitleFromIsoCode($table, $isoCode, $lang='', $local=FALSE)
- *  341:     function replaceMarkersInSQL($sql, $table, $row)
- *  383:     function selectItemsTCA($params)
- *  480:     function updateHotlist ($table, $indexValue, $indexField='', $app='')
- *  542:     function &fetchCountries($country, $iso2='', $iso3='', $isonr='')
- *  587:     function quoteJSvalue($value, $inScriptTags=FALSE)
- *  609:     function loadTcaAdditions($ext_keys)
+ *  340:     function replaceMarkersInSQL($sql, $table, $row)
+ *  382:     function selectItemsTCA($params)
+ *  479:     function updateHotlist ($table, $indexValue, $indexField='', $app='')
+ *  541:     function &fetchCountries($country, $iso2='', $iso3='', $isonr='')
+ *  586:     function quoteJSvalue($value, $inScriptTags=FALSE)
+ *  608:     function loadTcaAdditions($ext_keys)
  *
  * TOTAL FUNCTIONS: 14
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -280,8 +280,7 @@ class tx_staticinfotables_div {
 
 		$title = '';
 		$titleFields = tx_staticinfotables_div::getTCAlabelField($table, TRUE, $lang, $local);
-
-		if (count($titleFields))	{
+		if (count ($titleFields))	{
 			$prefixedTitleFields = array();
 			foreach ($titleFields as $titleField) {
 				$prefixedTitleFields[] = $table.'.'.$titleField;

@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "static_info_tables".
  *
- * Auto generated 11-07-2013 13:35
+ * Auto generated 11-07-2013 13:36
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'description' => 'Some database tables with usefull informations about countries, languages and currencies.',
 	'category' => 'misc',
 	'shy' => 0,
-	'version' => '2.0.11',
+	'version' => '2.1.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -37,7 +37,7 @@ $EM_CONF[$_EXTKEY] = array (
 		'depends' => 
 		array (
 			'typo3' => '4.0-0.0.0',
-			'php' => '4.0.0-0.0.0',
+			'php' => '5.1.0-0.0.0',
 		),
 		'conflicts' => 
 		array (
