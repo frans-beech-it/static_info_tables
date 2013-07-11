@@ -39,7 +39,7 @@ class ext_update  {
 	 */
 	function main()	{
 
-		require_once (t3lib_extMgm::extPath('static_info_tables').'class.tx_staticinfotables_encoding.php');
+		require_once ('class.tx_staticinfotables_encoding.php');
 
 		$tables = array ('static_countries', 'static_country_zones', 'static_languages', 'static_currencies');
 
