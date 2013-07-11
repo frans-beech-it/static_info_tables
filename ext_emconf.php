@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "static_info_tables".
  *
- * Auto generated 17-04-2013 06:17
+ * Auto generated 11-07-2013 13:32
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -11,37 +11,38 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array (
-	'title' => 'Static Info Tables',
-	'description' => 'Data and API for countries, languages and currencies.',
+	'title' => 'Static info tables',
+	'description' => 'Some database tables with usefull informations about countries, languages and currencies. Still lacks some data but the overall concept is stable.',
 	'category' => 'misc',
-	'shy' => 0,
-	'version' => '2.3.1',
+	'shy' => '0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
 	'loadOrder' => '',
 	'module' => '',
 	'state' => 'stable',
-	'uploadfolder' => 0,
+	'uploadfolder' => '0',
 	'createDirs' => '',
 	'modify_tables' => '',
-	'clearcacheonload' => 0,
+	'clearCacheOnLoad' => '0',
 	'lockType' => '',
-	'author' => 'RenÃ© Fritz',
+	'author' => 'René Fritz',
 	'author_email' => 'r.fritz@colorcube.de',
 	'author_company' => 'Colorcube - digital media lab, www.colorcube.de',
 	'CGLcompliance' => NULL,
 	'CGLcompliance_note' => NULL,
+	'version' => '1.0.0',
 	'constraints' => 
 	array (
 		'depends' => 
 		array (
-			'typo3' => '4.3-0.0.0',
-			'php' => '5.2.0-0.0.0',
+			'typo3' => '',
+			'php' => '',
+			'' => '',
 		),
 		'conflicts' => 
 		array (
-			'sr_static_info' => '',
+			'' => '',
 		),
 		'suggests' => 
 		array (
