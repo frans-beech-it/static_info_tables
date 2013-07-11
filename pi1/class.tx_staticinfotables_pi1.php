@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2004-2008 Stanislas Rolland <stanislas.rolland(arobas)fructifor.ca>
+*  (c) 2004-2008 Stanislas Rolland <stanislas.rolland(arobas)sjbr.ca>
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is
@@ -28,9 +28,9 @@
  *
  * Class for handling static info tables: countries, and subdivisions, currencies, languages and taxes
  *
- * $Id: class.tx_staticinfotables_pi1.php 9074 2008-05-02 19:21:54Z franzholz $
+ * $Id: class.tx_staticinfotables_pi1.php 9325 2008-06-14 08:41:00Z franzholz $
  *
- * @author	Stanislas Rolland <stanislas.rolland(arobas)fructifor.ca>
+ * @author	Stanislas Rolland <stanislas.rolland(arobas)sjbr.ca>
  */
 
 /**
@@ -38,21 +38,22 @@
  *
  *
  *
- *   65: class tx_staticinfotables_pi1 extends tslib_pibase
- *   94:     function init($conf=array())
- *  147:     function getStaticInfoName($type='COUNTRIES', $code, $country='', $countrySubdivision='', $self=0)
- *  211:     function buildStaticInfoSelector($type='COUNTRIES', $name='', $class='', $selectedArray=array(), $country='', $submit=0, $id='', $title='', $addWhere='', $lang='', $local=FALSE, $mergeArray=array(), $size=1)
- *  296:     function initCountries($param='UN', $lang='', $local=FALSE, $addWhere='')
- *  353:     function initCountrySubdivisions($param, $addWhere='')
- *  399:     function initCurrencies($addWhere='')
- *  439:     function initLanguages($addWhere='')
- *  479:     function optionsConstructor($nameArray, $selectedArray=array())
- *  500:     function loadCurrencyInfo($currencyCode)
- *  545:     function formatAmount($amount, $displayCurrencyCode='')
- *  573:     function formatAddress($delim, $streetAddress, $city, $zip, $subdivisionCode='', $countryCode='')
- *  615:     function getCurrentLanguage()
+ *   66: class tx_staticinfotables_pi1 extends tslib_pibase
+ *   96:     function needsInit ()
+ *  106:     function init($conf=array())
+ *  163:     function getStaticInfoName($type='COUNTRIES', $code, $country='', $countrySubdivision='', $local=FALSE)
+ *  234:     function buildStaticInfoSelector($type='COUNTRIES', $name='', $class='', $selectedArray=array(), $country='', $submit=0, $id='', $title='', $addWhere='', $lang='', $local=FALSE, $mergeArray=array(), $size=1, &$outSelectedArray=array())
+ *  319:     function initCountries($param='UN', $lang='', $local=FALSE, $addWhere='')
+ *  376:     function initCountrySubdivisions($param, $addWhere='')
+ *  422:     function initCurrencies($addWhere='')
+ *  462:     function initLanguages($addWhere='')
+ *  503:     function optionsConstructor($nameArray, $selectedArray=array(), &$outSelectedArray=array())
+ *  529:     function loadCurrencyInfo($currencyCode)
+ *  574:     function formatAmount($amount, $displayCurrencyCode='')
+ *  602:     function formatAddress($delim, $streetAddress, $city, $zip, $subdivisionCode='', $countryCode='')
+ *  646:     function getCurrentLanguage()
  *
- * TOTAL FUNCTIONS: 12
+ * TOTAL FUNCTIONS: 13
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -84,6 +85,17 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 		'TAXES' 	=> 'static_taxes',
 		'SUBTAXES' 	=> 'static_taxes'
 	);
+	var $bHasBeenInitialised = FALSE;
+
+	/**
+	 * Returns info if the tx_staticinfotables_pi1 object has already been initialised.
+	 * You need to initialise this object only once.
+	 *
+	 * @return	boolean		Always returns true
+	 */
+	function needsInit ()	{
+		return !$this->bHasBeenInitialised;
+	}
 
 	/**
 	 * Initializing the class: sets the language based on the TS configuration language property
@@ -101,13 +113,13 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 		if (!$this->currency)	{
 			$this->currency = (trim($this->conf['currencyCode'])) ? trim($this->conf['currencyCode']) : 'EUR';
 		}
-			//If not set, we use the Euro
+			//If nothing is set, we use the Euro because TYPO3 is spread more in this area
 		if (!$this->getStaticInfoName('CURRENCIES', $this->currency)) {
 			$this->currency = 'EUR';
 		}
 		$this->currencyInfo = $this->loadCurrencyInfo($this->currency);
-
 		$this->defaultCountry = $conf['countryCode'];
+
 		if (!$this->defaultCountry)	{
 			$this->defaultCountry = trim($this->conf['countryCode']);
 		}
@@ -119,8 +131,12 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 		if (!$this->defaultCountryZone)	{
 			$this->defaultCountryZone = trim($this->conf['countryZoneCode']);
 		}
-		if (!$this->getStaticInfoName('SUBDIVISIONS', $this->defaultCountryZone, $this->defaultCountry)) {
-			$this->defaultCountryZone = 'NRW';
+		if (!$this->getStaticInfoName('SUBDIVISIONS', $this->defaultCountryZone, $this->defaultCountry))	{
+			if ($this->defaultCountry == 'DEU') {
+				$this->defaultCountryZone = 'NRW';
+			} else {
+				$this->defaultCountryZone = '';
+			}
 		}
 
 		$this->defaultLanguage = $conf['languageCode'];
@@ -130,31 +146,33 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 		if (!$this->getStaticInfoName('LANGUAGES', $this->defaultLanguage)) {
 			$this->defaultLanguage = 'EN';
 		}
-		return true;
+		$this->bHasBeenInitialised = TRUE;
+		return TRUE;
 	}
 
 	/**
 	 * Getting the name of a country, country subdivision, currency, language, tax
 	 *
 	 * @param	string		Defines the type of entry of the requested name: 'TERRIRORIES', 'COUNTRIES', 'SUBDIVISIONS', 'CURRENCIES', 'LANGUAGES', 'TAXES', 'SUBTAXES'
-	 * @param	string		The ISO alpha-3 code of a territory, country or currency, or the ISO alpha-2 code of a language or the code of a country subdivision
 	 * @param	string		The ISO alpha-3 code of a territory, country or currency, or the ISO alpha-2 code of a language or the code of a country subdivision, can be a comma ',' separated string, then all the single items are looked up and returned
 	 * @param	string		The value of the country code (cn_iso_3) for which a name of type 'SUBDIVISIONS', 'TAXES' or 'SUBTAXES' is requested (meaningful only in these cases)
-	 * @param	string		The value of the country subdivision code for which a name of type 'SUB_TAXES' is requested (meaningful only in this case)
-	 * @param	[type]		$self: ...
+	 * @param	string		The value of the country subdivision code for which a name of type 'SUBTAXES' is requested (meaningful only in this case)
+	 * @param	boolean		local name only - if set local title is returned
 	 * @return	string		The name of the object in the current language
 	 */
-	function getStaticInfoName($type='COUNTRIES', $code, $country='', $countrySubdivision='', $self=0) {
+	function getStaticInfoName($type='COUNTRIES', $code, $country='', $countrySubdivision='', $local=FALSE) {
 		global $TYPO3_DB, $TSFE;
 
 		if (in_array($type, $this->types) && trim($code)) {
 			$codeArray = t3lib_div::trimExplode(',',($code));
-
 			$table = $this->tables[$type];
+			if (!$table)	{
+				return FALSE;
+			}
 			$lang = $this->getCurrentLanguage();
-			$isoCode = array();
-			$isoCode[] = trim($code);
-
+			if (!t3lib_extMgm::isLoaded(STATIC_INFO_TABLES_EXTkey.'_'.strtolower($lang)))	{
+				$lang = '';
+			}
 			$nameArray = array();
 			foreach ($codeArray as $tmpisoCode)	{
 				$isoCodeArray = array();
@@ -164,22 +182,26 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 					case 'TERRITORIES':
 					case 'COUNTRIES':
 					case 'CURRENCIES':
-						$name = tx_staticinfotables_div::getTitleFromIsoCode($table, $isoCodeArray, $lang);
+						$name = tx_staticinfotables_div::getTitleFromIsoCode($table, $isoCodeArray, $lang, $local);
 						break;
 					case 'SUBDIVISIONS':
 					case 'TAXES':
 						$isoCodeArray[] = trim($country) ? trim($country) : $this->defaultCountry;
-						$name = tx_staticinfotables_div::getTitleFromIsoCode($table, $isoCodeArray, $lang);
+						$name = tx_staticinfotables_div::getTitleFromIsoCode($table, $isoCodeArray, $lang, $local);
 						break;
 					case 'SUBTAXES':
 						$isoCodeArray[] = trim($country) ? trim($country) : $this->defaultCountry;
 						$isoCodeArray[] = trim($countrySubdivision) ? trim($countrySubdivision) : $this->defaultCountryZone;
-						$name = tx_staticinfotables_div::getTitleFromIsoCode($table, $isoCodeArray, $lang);
+						$name = tx_staticinfotables_div::getTitleFromIsoCode($table, $isoCodeArray, $lang, $local);
 						break;
 					case 'LANGUAGES':
 						$isoCodeArray = t3lib_div::trimExplode( '_', $code, 1);
-						$name = tx_staticinfotables_div::getTitleFromIsoCode($table, $isoCodeArray, $lang, $self);
+						$name = tx_staticinfotables_div::getTitleFromIsoCode($table, $isoCodeArray, $lang, $local);
 						break;
+				}
+				if (!$name && $lang != 'EN')	{
+					// use the default English name if there is not text in another language
+					$name = tx_staticinfotables_div::getTitleFromIsoCode($table, $isoCodeArray, '', $local);
 				}
 				$nameArray[] = $TSFE->csConv($name, $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['charset']);
 			}
@@ -206,9 +228,10 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 	 * @param	boolean		$local: If set, we are looking for the "local" title field
 	 * @param	array		additional array to be merged as key => value pair
 	 * @param	int		max elements that can be selected. Default: 1
+	 * @param	array		out: resulting selected array with the ISO alpha-3 code of the countries
 	 * @return	string		A set of HTML <select> and <option> tags
 	 */
-	function buildStaticInfoSelector($type='COUNTRIES', $name='', $class='', $selectedArray=array(), $country='', $submit=0, $id='', $title='', $addWhere='', $lang='', $local=FALSE, $mergeArray=array(), $size=1)	{
+	function buildStaticInfoSelector($type='COUNTRIES', $name='', $class='', $selectedArray=array(), $country='', $submit=0, $id='', $title='', $addWhere='', $lang='', $local=FALSE, $mergeArray=array(), $size=1, &$outSelectedArray=array())	{
 		global $TSFE;
 
 		if ($size > 1) {
@@ -274,7 +297,7 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 			uasort($nameArray, 'strcoll');
 		}
 		if(count($nameArray) > 0)	{
-			$selector .= $this->optionsConstructor($nameArray, $selectedArray);
+			$selector .= $this->optionsConstructor($nameArray, $selectedArray, $outSelectedArray);
 			$selector .= '</select>'.chr(10);
 		} else {
 			$selector = '';
@@ -320,7 +343,6 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 			$where = '1=1';
 		}
 		$where .= ($addWhere ? ' AND '.$addWhere : '');
-
 		$res = $TYPO3_DB->exec_SELECTquery(
 			$labelFields,
 			$table,
@@ -328,6 +350,7 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 		);
 
 		while ($row = $TYPO3_DB->sql_fetch_assoc($res))	{
+
 			foreach ($titleFields as $titleField) {
 				if ($row[$titleField]) {
 					$nameArray[$row['cn_iso_3']] = $TSFE->csConv($row[$titleField], $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['charset']);
@@ -474,20 +497,26 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 	 *
 	 * @param	array		An array where the values will be the texts of an <option> tags and keys will be the values of the tags
 	 * @param	string		A pre-selected value: if the value appears as a key, the <option> tag will bear a 'selected' attribute
+	 * @param	array		out: resulting selected array with the ISO alpha-3 code of the countries
 	 * @return	string		A string of HTML <option> tags
 	 */
-	function optionsConstructor($nameArray, $selectedArray=array()) {
+	function optionsConstructor($nameArray, $selectedArray=array(), &$outSelectedArray=array()) {
 		global $TSFE;
 
 		$options = '';
 		foreach($nameArray as $value => $name)	{
+
 			$options  .= '<option value="'.$value.'"';
 			if (in_array($value, $selectedArray))	{
 				$options  .= ' selected="selected"';
+				$outSelectedArray[] = $value;
 			}
 			$options  .= '>'.$name.'</option>'.chr(10);
 		}
-
+		if (!isset($outSelectedArray) || count($outSelectedArray) == 0)	{
+			reset ($nameArray);
+			$outSelectedArray = array(key($nameArray));
+		}
 		return $options;
 	}
 
@@ -562,21 +591,23 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 	/**
 	 * Formatting an address in the format specified
 	 *
+	 * @param	string		A delimiter for the fields of the returned address
 	 * @param	string		A street address
 	 * @param	string		A city
 	 * @param	string		A country subdivision code (zn_code)
 	 * @param	string		A ISO alpha-3 country code (cn_iso_3)
 	 * @param	string		A zip code
-	 * @param	[type]		$countryCode: ...
 	 * @return	string		The formated address using the country address format (cn_address_format)
 	 */
 	function formatAddress($delim, $streetAddress, $city, $zip, $subdivisionCode='', $countryCode='')	{
 		global $TYPO3_DB;
 
 		$formatedAddress = '';
+		$countryCode = ($countryCode ? trim($countryCode) : $this->defaultCountry);
+		$subdivisionCode = ($subdivisionCode ? trim($subdivisionCode) : ($countryCode == $this->defaultCountry ? $this->defaultCountryZone : ''));
 
 			// Get country name
-		$countryName = $this->getStaticInfoName('COUNTRIES', (($countryCode)?$countryCode:$this->defaultCountry));
+		$countryName = $this->getStaticInfoName('COUNTRIES', $countryCode);
 		if (!$countryName) {
 			return $formatedAddress;
 		}
@@ -585,14 +616,14 @@ class tx_staticinfotables_pi1 extends tslib_pibase {
 		$res = $TYPO3_DB->exec_SELECTquery(
 			'cn_address_format',
 			'static_countries',
-			'cn_iso_3='.$TYPO3_DB->fullQuoteStr(trim((($countryCode)?$countryCode:$this->defaultCountry)),'static_countries')
+			'cn_iso_3='.$TYPO3_DB->fullQuoteStr($countryCode,'static_countries')
 		);
 		$row = $TYPO3_DB->sql_fetch_assoc($res);
 		$TYPO3_DB->sql_free_result($res);
 		$addressFormat = $row['cn_address_format'];
 
 			// Get country subdivision name
-		$countrySubdivisionName = $this->getStaticInfoName('SUBDIVISIONS', (($subdivisionCode)?$subdivisionCode:$this->defaultCountryZone), (($countryCode)?$countryCode:$this->defaultCountry));
+		$countrySubdivisionName = $this->getStaticInfoName('SUBDIVISIONS', $subdivisionCode, $countryCode);
 
 			// Format the address
 		$formatedAddress = $this->conf['addressFormat.'][$addressFormat];
