@@ -1,16 +1,18 @@
 # TYPO3 Extension "static_info_tables"
 Data and API for countries, languages and currencies.
 
-## Version 2.0.9
+## Version 2.0.10
 ** BE AWARE: This extension has been marked as insecure by the security team! **.
 
 
 
 <table>
-	<tr><td>Version</td><td>2.0.9 stable</td></tr>
-	<tr><td>Release date</td><td>14. June 2008</td></tr>
+	<tr><td>Version</td><td>2.0.10 stable</td></tr>
+	<tr><td>Release date</td><td>15. July 2008</td></tr>
 	<tr><td>Author</td><td>Ren Fritz</td></tr>
-	<tr><td>Comment</td><td>Vorarlberg is correct for VB in Austria .--- fix bug 8594: no default zone must be used if it does not fit to the default country</td></tr>
+	<tr><td>Comment</td><td>Fix bug with UPDATE! in TYPO3 4.2.1.
+Fix bug under PHP4 in buildStaticInfoSelector.
+Versions 2.0.x are the latest for PHP4. Go to PHP 5.2.x now.</td></tr>
 </table>
 
 ## !! Attention !!
