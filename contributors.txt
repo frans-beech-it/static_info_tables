@@ -1,0 +1,5 @@
+Franz Holzinger <kontakt@fholzinger.com>: bug fixes, uploads into TER
+Timo Proescholdt <timo at proescholdt.de>: Multiple Selector Boxes
+
+
+

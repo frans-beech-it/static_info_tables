@@ -1080,7 +1080,7 @@ INSERT INTO static_languages VALUES ('35', '0', 'FJ', 'Fijian', '', '', '', 'Na 
 INSERT INTO static_languages VALUES ('36', '0', 'FI', 'Finnish', 'fi', '', 'fi_FI', 'Suomi', '0', '0');
 INSERT INTO static_languages VALUES ('37', '0', 'FR', 'French', 'fr', '', 'fr_FR', 'Français', '0', '0');
 INSERT INTO static_languages VALUES ('38', '0', 'FY', 'Frisian', '', '', '', 'Frysk', '0', '0');
-INSERT INTO static_languages VALUES ('39', '0', 'GL', 'Galician', '', '', '', 'Galego', '0', '0');
+INSERT INTO static_languages VALUES ('39', '0', 'GL', 'Galician', 'ga', '', 'gl_ES', 'Galego', '0', '0');
 INSERT INTO static_languages VALUES ('40', '0', 'GD', 'Scottish Gaelic', '', '', '', 'Gàidhlig', '0', '0');
 INSERT INTO static_languages VALUES ('41', '0', 'GV', 'Manx', '', '', '', 'Gaelg', '0', '0');
 INSERT INTO static_languages VALUES ('42', '0', 'KA', 'Georgian', '', '', '', 'ქართული', '0', '0');

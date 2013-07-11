@@ -24,12 +24,14 @@
 /**
  * example for using the hotlist functionality with the sys_language table
  *
- * $Id: class.tx_staticinfotables_syslanguage.php 5696 2007-06-16 08:30:15Z franzholz $
+ * $Id: class.tx_staticinfotables_syslanguage.php 7567 2007-12-16 14:23:09Z franzholz $
  *
  * @author	René Fritz <r.fritz@colorcube.de>
  * @package TYPO3
  */
 
+
+global $TYPO3_CONF_VARS;
 
 
 /**
@@ -40,7 +42,7 @@
  */
 class tx_staticinfotables_syslanguage {
 
-	function processDatamap_postProcessFieldArray($status, $table, $id, $fieldArray, $parent) {
+	function processDatamap_postProcessFieldArray($status, $table, $id, $fieldArray, &$pObj) {
 		if($table == 'sys_language' AND $fieldArray['static_lang_isocode']) {
 				// the hotlist will be updated only if the field changed, because only then it's in the $fieldArray
 			tx_staticinfotables_div::updateHotlist ('static_languages', $fieldArray['static_lang_isocode'], 'uid');
