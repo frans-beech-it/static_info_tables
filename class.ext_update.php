@@ -28,7 +28,9 @@
 /**
  * Class for updating the db
  *
- * @author	 RenÃ© Fritz <r.fritz@colorcube.de>
+ * $Id: class.ext_update.php 3989 2006-10-31 08:33:07Z franzholz $
+ *
+ * @author	 René Fritz <r.fritz@colorcube.de>
  */
 class ext_update  {
 
@@ -39,7 +41,7 @@ class ext_update  {
 	 */
 	function main()	{
 
-		require_once ('class.tx_staticinfotables_encoding.php');
+		require_once(t3lib_extMgm::extPath(STATIC_INFO_TABLES_EXTkey).'class.tx_staticinfotables_encoding.php');
 
 		$tables = array ('static_countries', 'static_country_zones', 'static_languages', 'static_currencies');
 
@@ -72,7 +74,11 @@ class ext_update  {
 		return $content;
 	}
 
-
+	/**
+	 * access is always allowed
+	 *
+	 * @return	boolean		Always returns true
+	 */
 	function access() {
 		return true;
 	}

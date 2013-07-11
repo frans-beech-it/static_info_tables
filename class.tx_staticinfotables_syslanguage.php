@@ -24,6 +24,8 @@
 /**
  * example for using the hotlist functionality with the sys_language table
  *
+ * $Id: class.tx_staticinfotables_syslanguage.php 3909 2006-10-11 19:36:33Z franzholz $
+ *
  * @author	René Fritz <r.fritz@colorcube.de>
  * @package TYPO3
  */
