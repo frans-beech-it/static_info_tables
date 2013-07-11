@@ -12,10 +12,10 @@
 
 $EM_CONF[$_EXTKEY] = array (
 	'title' => 'Static Info Tables',
-	'description' => 'API and Data for countries, languages and currencies.',
+	'description' => 'API and data for countries, languages and currencies.',
 	'category' => 'misc',
 	'shy' => 0,
-	'version' => '2.1.1',
+	'version' => '2.1.2',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -27,7 +27,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'modify_tables' => '',
 	'clearcacheonload' => 0,
 	'lockType' => '',
-	'author' => 'RenÃ© Fritz',
+	'author' => 'RenÃÂ© Fritz',
 	'author_email' => 'r.fritz@colorcube.de',
 	'author_company' => 'Colorcube - digital media lab, www.colorcube.de',
 	'CGLcompliance' => NULL,
@@ -41,6 +41,7 @@ $EM_CONF[$_EXTKEY] = array (
 		),
 		'conflicts' => 
 		array (
+			'sr_static_info' => '0.0.1-',
 		),
 		'suggests' => 
 		array (
