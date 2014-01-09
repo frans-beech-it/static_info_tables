@@ -1,7 +1,14 @@
+2013-11-27  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #54008: CachedClassLoader not loaded in ext_localconf in TYPO3 6.2
+	* Enable in TYPO3 6.2
+	* Update version to 6.0.7
+
 2013-11-26  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves #52103: PHP Warning in ElementRenderingHelper
 	* Update version to 6.0.6
+	* Resolves #53987: Incorrectly named Brazilian locallang file
 
 2013-11-25  Stanislas Rolland  <typo3@sjbr.ca>
 
