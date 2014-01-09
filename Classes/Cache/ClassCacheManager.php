@@ -81,11 +81,13 @@ class ClassCacheManager {
 			$code = $this->parseSingleFile($path, FALSE);
 
 			// Get the files from all other extensions that are extending this domain model class
-			$extensionsWithThisClass = $extensibleExtensions[$key];
-			foreach ($extensionsWithThisClass as $extension => $value) {
-				$path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extension) . 'Classes/' . $key . '.php';
-				if (is_file($path)) {
-					$code .= $this->parseSingleFile($path);
+			if (isset($extensibleExtensions[$key]) && is_array($extensibleExtensions[$key]) && count($extensibleExtensions[$key]) > 0) {
+				$extensionsWithThisClass = array_keys($extensibleExtensions[$key]);
+				foreach ($extensionsWithThisClass as $extension) {
+					$path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extension) . 'Classes/' . $key . '.php';
+					if (is_file($path)) {
+						$code .= $this->parseSingleFile($path);
+					}
 				}
 			}
 
@@ -199,7 +201,9 @@ class ClassCacheManager {
 	 */
 	public function clear() {
 		$this->cacheInstance->flush();
-		$GLOBALS['BE_USER']->writelog(3, 1, 0, 0, '[StaticInfoTables]: User %s has cleared the class cache', array($GLOBALS['BE_USER']->user['username']));
+		if (isset($GLOBALS['BE_USER'])) {
+			$GLOBALS['BE_USER']->writelog(3, 1, 0, 0, '[StaticInfoTables]: User %s has cleared the class cache', array($GLOBALS['BE_USER']->user['username']));
+		}
 	}
 
 	/**
@@ -213,9 +217,10 @@ class ClassCacheManager {
 			|| (
 				!empty($parameters['cacheCmd'])
 				&& \TYPO3\CMS\Core\Utility\GeneralUtility::inList('all,temp_cached', $parameters['cacheCmd'])
+				&& isset($GLOBALS['BE_USER'])
 			)
 		);
-		if ($isValidCall && isset($GLOBALS['BE_USER'])) {
+		if ($isValidCall) {
 			$this->clear();
 			$this->build();
 		}

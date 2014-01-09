@@ -1,3 +1,31 @@
+2013-11-26  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #52103: PHP Warning in ElementRenderingHelper
+	* Update version to 6.0.6
+
+2013-11-25  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #52415: Caching issue while using static country repository
+
+2013-11-21  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #53840: Could not determine the child object type.
+	* Resolves #51532: cn_currency_iso_3 in some african countries are wrong in table static_countries
+	* Resolves #52572: countryRepository->findByTerritory does not respect territory hierarchy
+
+2013-11-20  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #51754: PHP Warning in ClassCacheManager
+
+2013-08-12  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Follow-up to #50804: Entities not sorted according to locale collation
+	* Resolves #50742: Translation handling fails in multi select fields (TCA)
+
+2013-08-07  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #50804: Entities not sorted according to locale collation
+
 2013-07-24  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Update version to 6.0.5
