@@ -1,3 +1,40 @@
+2014-02-13  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #55952: Wrong phone code for Liechtenstein in static_countries table
+	* Update version to 6.0.8
+
+2014-02-06  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #55476: Deprecated CSS inclusion
+	* Resolves #55744: Class TYPO3\CMS\Install\Sql\SchemaMigrator was renamed
+	
+2014-01-20  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #55183: Deprecation message - remove parameter
+
+2014-01-18  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Re-create the tables whenever the extension update script in run
+
+2014-01-17  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Follow-up to #54160: List module broken on root page
+	* Follow-up to #54160: Throw exception when current language is not found in Language repository
+
+2014-01-16  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #55081: Fatal error in Static Info Tables Manager module in TYPO3 6.2
+	* Follow-up to #55081: Fatal error in Static Info Tables Manager module in TYPO3 6.2
+	* Clean-up in class SJBR\StaticInfoTables\Hook\Backend\Form\SuggestReceiver
+	* Clean-up in class SJBR\StaticInfoTables\Hook\Backend\Form\ElementRenderingHelper
+	* Add TYPO3 version range dependency to generated language pack extension
+	* Follow-up to #50804: Entities not sorted according to locale collation
+	* Adjust country BE form
+
+2013-12-03  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #54160: List module broken on root page
+
 2013-11-27  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves #54008: CachedClassLoader not loaded in ext_localconf in TYPO3 6.2

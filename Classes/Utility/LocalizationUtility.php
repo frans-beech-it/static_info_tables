@@ -253,8 +253,8 @@ class LocalizationUtility {
 					}
 				}
 			}
-		} elseif (strlen($GLOBALS['BE_USER']->uc['lang']) > 0) {
-			self::$languageKey = $GLOBALS['BE_USER']->uc['lang'];
+		} else {
+			self::$languageKey = strlen($GLOBALS['BE_USER']->uc['lang']) > 0 ? $GLOBALS['BE_USER']->uc['lang'] : 'EN';
 			// Get standard locale dependencies for the backend
 			/** @var $locales \TYPO3\CMS\Core\Localization\Locales */
 			$locales = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Localization\\Locales');
@@ -274,12 +274,23 @@ class LocalizationUtility {
 	public static function setCollatingLocale() {
 		if (self::$collatingLocale === '') {
 			$languageCode = self::getCurrentLanguage();
-			$languageRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('SJBR\\StaticInfoTables\\Domain\\Repository\\LanguageRepository');
+			/** @var $objectManager \TYPO3\CMS\Extbase\Object\ObjectManager */
+			$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+			/** @var $languageRepository SJBR\StaticInfoTables\Domain\Repository\LanguageRepository */
+			$languageRepository = $objectManager->get('SJBR\\StaticInfoTables\\Domain\\Repository\\LanguageRepository');
 			list($languageIsoCodeA2, $countryIsoCodeA2) = explode('_', $languageCode, 2);
+			/** @var $language SJBR\StaticInfoTables\Domain\Model\Language */
 			$language = $languageRepository->findOneByIsoCodes($languageIsoCodeA2, $countryIsoCodeA2 ? $countryIsoCodeA2 : '');
-			self::$collatingLocale = $language->getCollatingLocale();
+			// If $language is_a NULL, current language was not found in the Language repository. Most probably, the repository is empty.
+			self::$collatingLocale = is_object($language) ? $language->getCollatingLocale() : 'en_GB';
 		}
-		return setlocale(LC_COLLATE, self::$collatingLocale . '.UTF8');
+		return setlocale(LC_COLLATE,
+			array(
+				self::$collatingLocale . '.UTF-8',
+				self::$collatingLocale . '.UTF8',
+				self::$collatingLocale . '.utf8'
+			)
+		);
 	}
 
 	/**

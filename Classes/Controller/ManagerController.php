@@ -3,10 +3,11 @@ namespace SJBR\StaticInfoTables\Controller;
 use \SJBR\StaticInfoTables\Domain\Model\Country;
 use \SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use \SJBR\StaticInfoTables\Domain\Model\Language;
+use \TYPO3\CMS\Core\Utility\VersionNumberUtility;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Stanislas Rolland <typo3@sjbr.ca>
+ *  (c) 2013-2014 Stanislas Rolland <typo3@sjbr.ca>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -33,7 +34,12 @@ use \SJBR\StaticInfoTables\Domain\Model\Language;
  *
  * @author Stanislas Rolland <typo3@sjbr.ca>
  */
-class ManagerController extends AbstractController {
+class ManagerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+
+	/**
+	 * @var string Name of the extension this controller belongs to
+	 */
+	protected $extensionName = 'StaticInfoTables';
 
 	/**
 	 * @var \SJBR\StaticInfoTables\Domain\Repository\CountryRepository
@@ -111,6 +117,26 @@ class ManagerController extends AbstractController {
 	}
 
 	/**
+	 * Creates a Message object and adds it to the FlashMessageQueue.
+	 *
+	 * @param string $messageBody The message
+	 * @param string $messageTitle Optional message title
+	 * @param integer $severity Optional severity, must be one of \TYPO3\CMS\Core\Messaging\FlashMessage constants
+	 * @param boolean $storeInSession Optional, defines whether the message should be stored in the session (default) or not
+	 * @return void
+	 * @throws \InvalidArgumentException if the message body is no string
+	 * @see \TYPO3\CMS\Core\Messaging\FlashMessage
+	 * @api
+	 */
+	public function addFlashMessage($messageBody, $messageTitle = '', $severity = \TYPO3\CMS\Core\Messaging\AbstractMessage::OK, $storeInSession = TRUE) {
+		if (VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version(VersionNumberUtility::getCurrentTypo3Version())) >= 6002000) {
+			parent::addFlashMessage($messageBody, $messageTitle, $severity, $storeInSession);
+		} else {
+			$this->flashMessageContainer->add($messageTitle, $messageBody, $severity);
+		}
+	}
+
+	/**
 	 * Display general information
 	 *
 	 * @return string An HTML display of data overview
@@ -168,6 +194,7 @@ class ManagerController extends AbstractController {
 		$localeUtility = $this->objectManager->get('SJBR\\StaticInfoTables\\Utility\\LocaleUtility');
 		$language = $localeUtility->getLanguageFromLocale($locale);
 		$languagePack->setLanguage($language);
+		$languagePack->setTypo3VersionRange($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][\TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->extensionName)]['constraints']['depends']['typo3']);
 		// If version is not set, use the version of the base extension
 		if (!$languagePack->getVersion()) {
 			$languagePack->setVersion($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][\TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($this->extensionName)]['version']);
@@ -182,7 +209,7 @@ class ManagerController extends AbstractController {
 		$messages = $languagePackRepository->writeLanguagePack($languagePack);
 		if (count($messages)) {
 			foreach ($messages as $message) {
-				$this->flashMessageContainer->add('', $message, \TYPO3\CMS\Core\Messaging\FlashMessage::OK);
+				$this->addFlashMessage($message, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 			}
 		}
 		$this->forward('information');
@@ -263,7 +290,7 @@ class ManagerController extends AbstractController {
 		$filename = 'export-ext_tables_static+adt.sql';
 		\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($extensionPath . $filename, implode(LF, $dumpContent));
 		$message = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('sqlDumpCreated', $this->extensionName) . ' ' . $extensionPath . $filename;
-		$this->flashMessageContainer->add('', $message, \TYPO3\CMS\Core\Messaging\FlashMessage::OK);
+		$this->addFlashMessage($message, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 		$this->forward('information');
 	}
 
