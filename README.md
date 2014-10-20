@@ -1,17 +1,16 @@
 # TYPO3 Extension "static_info_tables"
 Data and API for countries, languages and currencies.
 
-## Version 6.1.0
+## Version 6.1.1
 
 
 
 
 <table>
-	<tr><td>Version</td><td>6.1.0 stable</td></tr>
-	<tr><td>Release date</td><td>23. April 2014</td></tr>
+	<tr><td>Version</td><td>6.1.1 stable</td></tr>
+	<tr><td>Release date</td><td>08. October 2014</td></tr>
 	<tr><td>Author</td><td>Stanislas Rolland/Ren Fritz</td></tr>
-	<tr><td>Comment</td><td>Bug fixes.
-New select view helper.</td></tr>
+	<tr><td>Comment</td><td>Bug fixes.</td></tr>
 </table>
 
 ## !! Attention !!

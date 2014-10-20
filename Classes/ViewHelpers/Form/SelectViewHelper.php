@@ -186,7 +186,14 @@ class SelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelpe
 		}
 		$this->arguments['options'] = $options;
 
-		return parent::getOptions();
+		$sortedOptions = parent::getOptions();
+		// Put default option after sorting to get it to the top of the items
+		if ($this->hasArgument('defaultOptionLabel')) {
+			$defaultOptionLabel = $this->arguments['defaultOptionLabel'];
+			$defaultOptionValue = $this->hasArgument('defaultOptionValue') ? $this->arguments['defaultOptionValue'] : 0;
+			$sortedOptions = array($defaultOptionValue => $defaultOptionLabel) + $sortedOptions;
+		}
+		return $sortedOptions;
 	}
 
 	/**
@@ -213,8 +220,10 @@ class SelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelpe
 			'arguments' => $this->arguments,
 			'items'     => $items
 		));
-		$this->arguments = $list['arguments'];
-		$items = $list['items'];
+		if ($list !== NULL) {
+			$this->arguments = $list['arguments'];
+			$items = $list['items'];
+		}
 
 		return $items;
 	}

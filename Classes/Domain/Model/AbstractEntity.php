@@ -1,10 +1,9 @@
 <?php
 namespace SJBR\StaticInfoTables\Domain\Model;
-use \SJBR\StaticInfoTables\Utility\LocalizationUtility;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2013 Stanislas Rolland <typo3(arobas)sjbr.ca>
+*  (c) 2013-2014 Stanislas Rolland <typo3(arobas)sjbr.ca>
 *
 *  All rights reserved
 *
@@ -26,32 +25,25 @@ use \SJBR\StaticInfoTables\Utility\LocalizationUtility;
 ***************************************************************/
 /**
  * Abstract model for static entities
- *
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class AbstractEntity extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
-	/**
-	 * Extbase configuration
-	 *
-	 * @var array
-	 */
-	protected $extbaseConfiguration;
+use \SJBR\StaticInfoTables\Utility\LocalizationUtility;
+
+class AbstractEntity extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * Name of the table from persistence mapping of this model
 	 *
 	 * @var string
 	 */
-	protected $tableName;
+	protected $tableName = '';
 
 	/**
 	 * Contains the persistence columns mapping of this model
 	 *
 	 * @var array
 	 */
-	protected $columnsMapping;
+	protected $columnsMapping = array();
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
@@ -63,8 +55,6 @@ class AbstractEntity extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function initializeObject() {
 		$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-		$configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
-		$this->extbaseConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 	}
 
 	/**
@@ -103,5 +93,22 @@ class AbstractEntity extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		}
 		return $this->nameLocalized;
 	}
+
+	/**
+	 * Gets the table name
+	 *
+	 * @return string
+	 */
+	public function getTableName() {
+		return $this->tableName;
+	}
+
+	/**
+	 * Gets the columns mapping
+	 *
+	 * @return string
+	 */
+	public function getColumnsMapping() {
+		return $this->columnsMapping;
+	}
 }
-?>

@@ -1,7 +1,39 @@
+2014-10-08  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Update version to 6.1.1
+
+2014-09-29  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Add getters for abstract entity properties tableName and columnsMapping
+
+2014-09-22  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #59586: Add Subterritory "419 Latin America and the Caribbean"
+	* Resolves #61769: Polish zones should be written beginning from lower letter
+	* Rename directory Configuration/Tca to Configuration/TCA
+	* Resolves #60725: Reduce used memory of the Domain Models (Thanks to Tim Lochmüller)
+	* Resolves #59896: TCA Selection of countries with different key
+
+2014-07-29  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #60666: Outdated data for Turkish lira
+	* Resolves #59459: SelectViewHelper: DefaultOptionValue and Label with no effect (Thanks to Thomas Löffler)
+	* Resolves #59451: SelectViewHelper returns no items (Thanks to Thomas Löffler)
+
+2014-06-03  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #59300: Missing namespace for InvalidArgumentException
+	* Resolves #59301: Missing "searchFields" configuration in ext_tables.php
+	* Add localized fields as searchFields next time language pack is (re-)generated
+	* Usage of $GLOBALS['typo3CacheManager'] and $GLOBALS['typo3CacheFactory'] are deprecated since 6.2
+
+2014-04-29  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Update version to 6.1.0
+
 2014-04-23  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Update the manual
-	* Update version to 6.1.0
 
 2014-04-22  Stanislas Rolland  <typo3@sjbr.ca>
 

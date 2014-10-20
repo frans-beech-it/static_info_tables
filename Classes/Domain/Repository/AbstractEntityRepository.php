@@ -69,6 +69,23 @@ abstract class AbstractEntityRepository extends \TYPO3\CMS\Extbase\Persistence\R
 	}
 
 	/**
+	 * Find all objects with uid in list
+	 *
+	 * @param string $list: list of uid's
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array all entries
+	 */
+	public function findAllByUidInList($list = '') {
+		if (empty($list)) {
+			return array();
+		} else {
+			$query = $this->createQuery();
+			$list = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $list, TRUE);
+			$query->matching($query->in('uid', $list));
+			return $query->execute();
+		}
+	}
+
+	/**
 	 * Find all ordered by the localized name
 	 *
 	 * @param string $orderDirection may be "asc" or "desc". Default is "asc".
@@ -129,7 +146,7 @@ abstract class AbstractEntityRepository extends \TYPO3\CMS\Extbase\Persistence\R
 		$queryResult = array();
 
 		if ($orderDirection !== 'asc' && $orderDirection !== 'desc') {
-			throw new InvalidArgumentException('Order direction must be "asc" or "desc".', 1316607580);
+			throw new \InvalidArgumentException('Order direction must be "asc" or "desc".', 1316607580);
 		}
 
 		if ($propertyName == 'nameLocalized') {
@@ -139,7 +156,7 @@ abstract class AbstractEntityRepository extends \TYPO3\CMS\Extbase\Persistence\R
 
 			$object = $this->objectManager->create($this->objectType);
 			if (!array_key_exists($propertyName, $object->_getProperties())) {
-				throw new InvalidArgumentException('The model "' . $this->objectType . '" has no property "' . $propertyName . '" to order by.', 1316607579);
+				throw new \InvalidArgumentException('The model "' . $this->objectType . '" has no property "' . $propertyName . '" to order by.', 1316607579);
 			}
 
 			if ($orderDirection === 'asc') {
