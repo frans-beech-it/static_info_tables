@@ -8,7 +8,7 @@ if (!defined ('TYPO3_MODE')) {
 
 $typo3Version = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version);
 $extensionResourcesLanguagePath = 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_db.xlf:';
-$extensionConfigurationTcaPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/';
+$extensionConfigurationTcaPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/Tca/';
 $extensionResourcesIconsPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Images/Icons/';
 
 // Country reference data from ISO 3166-1
@@ -101,7 +101,7 @@ $GLOBALS['TCA']['static_languages'] = array(
 	)
 );
 
-// UN Territory reference data 
+// UN Territory reference data
 $GLOBALS['TCA']['static_territories'] = array(
 	'ctrl' => array(
 		'label' => 'tr_name_en',
@@ -178,7 +178,7 @@ if (TYPO3_MODE == 'BE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
 		);
 		// Add module configuration setup
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKEY . '/Configuration/TypoScript/Manager/setup.txt">');
-		
+
 		// Enable editing Static Info Tables
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['tables'])) {
 			$tableNames = array_keys($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['tables']);
